@@ -38,7 +38,7 @@ summary.mdl_forum_posts <- function(object, ...) {
   invisible(ret)
 }
 
-#' Summary of mdl_grads Object
+#' Summary of mdl_grades Object
 #'
 #' Provides summary statistics for moodle grades
 #' @inheritParams summary.mdl_forum_posts
@@ -59,6 +59,35 @@ summary.mdl_grades <- function(object, ...) {
       "Median" = median(normalized_grades, na.rm = TRUE),
       "Mean" = mean(normalized_grades, na.rm = TRUE),
       "SD" = sd(normalized_grades, na.rm = TRUE),
+    ) %>%
+    collect()
+  # Pretty print
+  cat("----------\n")
+  for (my_name in names(ret)) {
+    tmp <- ret[[my_name]]
+    if (is.numeric(tmp)) {
+      tmp <- pretty_num(tmp)
+    }
+    cat(str_pad(paste0(my_name, ":"), 10, "right"), "\t", tmp, "\n")
+  }
+  invisible(ret)
+}
+
+
+#' Summary of mdl_courses Object
+#'
+#' Provides summary statistics for moodle courses
+#' @inheritParams summary.mdl_forum_posts
+#' @import dplyr
+#' @importFrom stringr str_pad
+#' @return a tibble with the summary.
+#' @export
+summary.mdl_courses <- function(object, ...) {
+  ret <- object %>%
+
+    summarize(
+      "# of Courses" = n(),
+      "Categories" = n_distinct(category_name)
     ) %>%
     collect()
   # Pretty print

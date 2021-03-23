@@ -9,7 +9,7 @@
 #' @export
 pretty_num <- function(numbers, style = c("default", "nopad", "6")) {
   pretty_bytes(numbers, style) %>%
-    stringr::str_replace("B", "") %>%
     stringr::str_replace("kB", "K") %>%
-    stringr::str_replace("GB", "M")
+    stringr::str_replace("GB", "M") %>%
+    stringr::str_replace("B", "")
 }
