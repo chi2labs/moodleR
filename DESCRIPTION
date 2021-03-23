@@ -1,0 +1,29 @@
+Package: moodleR
+Type: Package
+Title: Helper Functions to Work with Moodle Data
+Version: 0.1.0
+Author: Aleksander Dietrichson
+Authors@R: c(person("Aleksander", "Dietrichson", email = "dietrichson@gmail.com", role = c("aut", "cre", "cph"))
+             )
+Maintainer: Aleksander Dietrichson <sasha@chi2labs.com>
+Description: The package contains functions to connect to a Moodle database, cache relevant tables locally and generate learning analytics. 
+    Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit www.moodle.org.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    lifecycle,
+    DBI,
+    RSQLite,
+    dplyr,
+    ggplot2,
+    tidytext,
+    ggwordcloud,
+    prettyunits,
+    utils
+RdMacros: lifecycle
+RoxygenNote: 7.1.1

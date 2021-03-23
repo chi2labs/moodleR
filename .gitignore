@@ -1,0 +1,8 @@
+inst/doc
+.Rbuildignore
+.Rhistory
+.RData
+.Rproj.user
+kladd
+moodleR.Rproj
+mdl_cache

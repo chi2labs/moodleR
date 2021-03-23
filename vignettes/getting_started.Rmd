@@ -1,0 +1,57 @@
+---
+title: "Getting Started with moodleR"
+author: "Aleksander Dietrichson, PhD ( $\\chi^\\color{red}2$ Laboratories)"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with the moodleR package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The moodleR package contains functions and algorithms to access Moodle$^{TM}$ data and perform reporting and/or learning analytics based in these data. For more information about Moodle go to [www.moodle.org](http://www.moodle.org). For more information about $\chi^\color{red}2$ (chi square) Laboratories and the work we do in learning analytics, visit our website: [www.chi2labs.com](http://www.chi2labs.com).
+
+## Installing and loadng the package
+
+To install the latest stable release from CRAN use:
+
+```{r setup, eval=FALSE}
+install.packages("moodleR")
+```
+
+To install the latest development version:
+```{r, eval=FALSE}
+devtools::install("chi2labs/moodleR")
+```
+
+
+After which the package is attached in the usual way.
+```{r}
+library(moodleR)
+```
+
+## Connecting to a Moodle Database
+
+
+```{r, eval=FALSE}
+mdl_con <- mdl_get_connection()
+```
+
+
+## Caching Data
+
+There are several reasons you would want to cache data locally rather than operating directly on a moodle database:
+
+* You don't want to create additional server traffic that will worry the system administrator and generate bandwidth and hardware charges.
+* You are experimenting with exotic new features and want to avoid any accidents which may get you banned from accessing the data in the future
+* You only need a subset of courses
+* You are conducting exploratory research a sample of courses and want to make sure you data stays stable during your experimentation
+* You want your Notebooks and Rmarkdown document to compile faster
+
+The moodleR package provides a method `moodle_cache` which allows for local caching of the data. 
