@@ -4,10 +4,12 @@
 \alias{summary.mdl_forum_posts}
 \title{Summary of mdl_forum_posts Object}
 \usage{
-\method{summary}{mdl_forum_posts}(my_posts)
+\method{summary}{mdl_forum_posts}(object, ...)
 }
 \arguments{
-\item{my_posts}{a lazy tbl reference with class mdl_forum_posts}
+\item{object}{a lazy tbl reference with class mdl_grades}
+
+\item{...}{currently ignored}
 }
 \value{
 a tibble with the summary.

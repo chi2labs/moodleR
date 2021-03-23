@@ -2,14 +2,16 @@
 #'
 #' Provides summary statistics for forum posts.
 #'
-#' @inheritParams plot.mdl_forum_posts
+#' @param object a lazy tbl reference with class mdl_grades
+#' @param ... currently ignored
+#'
 #' @import dplyr
 #' @importFrom stringr str_pad
 #' @return a tibble with the summary.
 #' @export
-summary.mdl_forum_posts <- function(my_posts) {
+summary.mdl_forum_posts <- function(object, ...) {
   ret <-
-    my_posts %>%
+    object %>%
     summarize(
       "# of posts" = n(),
       Courses = n_distinct(courseid),
@@ -39,14 +41,15 @@ summary.mdl_forum_posts <- function(my_posts) {
 #' Summary of mdl_grads Object
 #'
 #' Provides summary statistics for moodle grades
-#'
-#' @param my_grades a lazy tbl reference with class mdl_grades
+#' @inheritParams summary.mdl_forum_posts
 #' @import dplyr
+#' @importFrom stats sd
+#' @importFrom stats median
 #' @importFrom stringr str_pad
 #' @return a tibble with the summary.
 #' @export
-summary.mdl_grades <- function(my_grades) {
-  ret <- my_grades %>%
+summary.mdl_grades <- function(object, ...) {
+  ret <- object %>%
     mutate(normalized_grades = finalGrade / rawgrademax) %>%
     summarize(
       "# of Grades" = n(),

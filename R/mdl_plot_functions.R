@@ -2,16 +2,17 @@
 #'
 #' Create a simple wordcloud plot based on a mdl_posts object.
 #'
-#' @param my_posts a lazy tbl reference with class mdl_forum_posts
+#' @param x a lazy tbl reference with class mdl_forum_posts
+#' @param ... passed to ggplot
 #'
 #' @return ggplot
 #' @import ggwordcloud
 #' @import tidytext
 #' @importFrom utils head
 #' @export
-plot.mdl_forum_posts <- function(my_posts) {
+plot.mdl_forum_posts <- function(x, ...) {
   max_freq <- 200
-  my_posts %>%
+  x %>%
     collect() %>%
     unnest_tokens(word, message) %>%
     anti_join(tidytext::stop_words, by = "word") %>%

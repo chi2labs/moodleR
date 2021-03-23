@@ -4,10 +4,12 @@
 \alias{plot.mdl_forum_posts}
 \title{Wordcloud Plot}
 \usage{
-\method{plot}{mdl_forum_posts}(my_posts)
+\method{plot}{mdl_forum_posts}(x, ...)
 }
 \arguments{
-\item{my_posts}{a lazy tbl reference with class mdl_forum_posts}
+\item{x}{a lazy tbl reference with class mdl_forum_posts}
+
+\item{...}{passed to ggplot}
 }
 \value{
 ggplot

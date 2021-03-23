@@ -6,6 +6,11 @@
 \usage{
 pretty_num(numbers, style = c("default", "nopad", "6"))
 }
+\arguments{
+\item{numbers}{numeric vector to be formatted}
+
+\item{style}{formatting style}
+}
 \value{
 formatted charecter vector
 }
