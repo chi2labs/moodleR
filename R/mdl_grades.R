@@ -12,8 +12,6 @@ mdl_grades <- function(
 ) {
   ret <- tbl(con, "grades") %>%
   rename(userid = participantId) #TODO: temporary mapping
-
   class(ret) <- c(class(ret), "mdl_grades")
-
   ret
 }
