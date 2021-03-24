@@ -25,6 +25,8 @@ Imports:
     ggwordcloud,
     prettyunits,
     utils,
-    stringr
+    stringr,
+    rlang,
+    scales
 RdMacros: lifecycle
 RoxygenNote: 7.1.1

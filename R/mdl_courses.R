@@ -14,7 +14,7 @@ mdl_courses <- function(
 ) {
   ret <- tbl(con, "courses") %>%
     mutate(id = courseid) %>%
-    rename( courseid = courseId)
+    rename(courseid = courseId)
   class(ret) <- c(class(ret), "mdl_courses")
   ret
 }
