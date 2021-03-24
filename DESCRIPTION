@@ -23,7 +23,6 @@ Imports:
     ggplot2,
     tidytext,
     ggwordcloud,
-    prettyunits,
     utils,
     stringr,
     rlang,

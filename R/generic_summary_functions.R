@@ -7,7 +7,6 @@
 #' @param ... currently ignored
 #'
 #' @import dplyr
-#' @importFrom stringr str_pad
 #' @return a tibble with the summary.
 #' @export
 summary.mdl_forum_posts <- function(object, ...) {
@@ -25,8 +24,8 @@ summary.mdl_forum_posts <- function(object, ...) {
       "Most recent" = max(created, na.rm = TRUE)
     ) %>%
     collect()
-class(ret) <- c("mdl_post_summary", class(ret))
-ret
+  class(ret) <- c("mdl_post_summary", class(ret))
+  ret
 
 }
 
@@ -37,7 +36,6 @@ ret
 #' @import dplyr
 #' @importFrom stats sd
 #' @importFrom stats median
-#' @importFrom stringr str_pad
 #' @return a tibble with the summary.
 #' @export
 summary.mdl_grades <- function(object, ...) {
@@ -69,12 +67,33 @@ summary.mdl_grades <- function(object, ...) {
 #' @export
 summary.mdl_courses <- function(object, ...) {
   ret <- object %>%
-
     summarize(
       "# of Courses" = n(),
       "Categories" = n_distinct(category_name)
     ) %>%
     collect()
   class(ret) <- c("mdl_courses_summary", class(ret))
+  ret
+}
+
+
+#' Summary of mdl_users Object
+#'
+#' Provides summary statistics for moodle courses
+#' @inheritParams summary.mdl_forum_posts
+#' @import dplyr
+#' @return a tibble with the summary.
+#' @export
+summary.mdl_users <- function(object, ...) {
+  ret <- object %>%
+    summarize(
+      "# of Users" = n(),
+      "Context variables:" = "",
+      "Gender" = sum(!is.na(gender))
+    ) %>%
+    collect()
+  # Check for context variables
+
+  class(ret) <- c("mdl_users_summary", class(ret))
   ret
 }

@@ -5,7 +5,7 @@
 #' @param con a database connection object
 #' @importFrom dplyr tbl
 #' @importFrom dplyr select
-#' @return A dbplyr reference object.
+#' @return A dbplyr reference object
 #' @export
 mdl_grades <- function(
   con = mdl_get_connection()
