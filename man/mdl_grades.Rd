@@ -10,7 +10,7 @@ mdl_grades(con = mdl_get_connection())
 \item{con}{a database connection object}
 }
 \value{
-A dbplyr reference object.
+A dbplyr reference object
 }
 \description{
 Returns a reference to the (cached) grades table, with the most relevant columns selected.

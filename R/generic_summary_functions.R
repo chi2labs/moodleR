@@ -52,7 +52,7 @@ summary.mdl_grades <- function(object, ...) {
       "SD" = sd(normalized_grades, na.rm = TRUE),
     ) %>%
     collect()
-  class(ret) <- c("mdl_grades_summary",class(ret))
+  class(ret) <- c("mdl_grades_summary", class(ret))
   ret
 }
 

@@ -8,13 +8,13 @@
 my_format <- function(x) {
   # Small integer
   if (is.integer(x)) {
-    if(x<1000)
+    if (x < 1000)
       return(x)
   }
 
   # Numeric
   if (is.numeric(x)) {
-    x <- scales::label_number_si(accuracy = ifelse(x<=1,.001,.1))(x)
+    x <- scales::label_number_si(accuracy = ifelse(x <= 1, .001, .1))(x)
   }
   # Dates
   x
