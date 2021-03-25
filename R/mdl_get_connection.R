@@ -3,15 +3,27 @@
 #' Returns a connection to a Moodle database or the cached version if available.e
 #'
 #' @param use_cache If TRUE (the default) connection to the local cache is returned.
-#'
+#' @import DBI
+#' @import RMySQL
 #' @return a DBI connection object
 #' @export
 mdl_get_connection <- function(
   use_cache = TRUE
 ) {
   if (isTRUE(use_cache)) {
-    mdl_get_cache_connection()
+    return(
+      mdl_get_cache_connection()
+    )
   }
+  # mySQL connection
+  myConf <- config::get(config = "default")
+  DBI::dbConnect(
+    MySQL(),
+    user = myConf$moodleR$user,
+    password = myConf$moodleR$password,
+    dbname = myConf$moodleR$dbname,
+    host = myConf$moodleR$host
+  )
 }
 
 
