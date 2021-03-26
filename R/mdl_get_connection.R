@@ -3,12 +3,15 @@
 #' Returns a connection to a Moodle database or the cached version if available.e
 #'
 #' @param use_cache If TRUE (the default) connection to the local cache is returned.
+#' @param config Select configuration from config file
+#'
 #' @import DBI
 #' @import RMySQL
 #' @return a DBI connection object
 #' @export
 mdl_get_connection <- function(
-  use_cache = TRUE
+  use_cache = TRUE,
+  config = "default"
 ) {
   if (isTRUE(use_cache)) {
     return(
@@ -16,7 +19,7 @@ mdl_get_connection <- function(
     )
   }
   # mySQL connection
-  myConf <- config::get(config = "default")
+  myConf <- config::get(config = config)
   DBI::dbConnect(
     MySQL(),
     user = myConf$moodleR$user,
@@ -29,13 +32,24 @@ mdl_get_connection <- function(
 
 #' Connection to Cached Moodle Data
 #'
+#' @param access Specifies RO or RWC accesss
+#'
 #' @importFrom RSQLite SQLite
 #' @importFrom DBI dbConnect
 #' @return a DBI connection object
 #' @export
-mdl_get_cache_connection <- function() {
+mdl_get_cache_connection <- function(access = c("RO","RWC")) {
+
+  flags <- match.arg(access)
+  flags <- switch(
+    flags,
+    RO = RSQLite::SQLITE_RO,
+    RWC = RSQLite::SQLITE_RWC
+  )
+
   con <- DBI::dbConnect(RSQLite::SQLite(),
-                        dbname = paste0(mdl_get_cache_dir(), "/", mdl_get_cache_filename())
+                        dbname = paste0(mdl_get_cache_dir(), "/", mdl_get_cache_filename()),
+                        flags = flags
   )
   # TODO: Add checks etc. here
 

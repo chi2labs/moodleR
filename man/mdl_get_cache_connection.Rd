@@ -4,7 +4,10 @@
 \alias{mdl_get_cache_connection}
 \title{Connection to Cached Moodle Data}
 \usage{
-mdl_get_cache_connection()
+mdl_get_cache_connection(access = c("RO", "RWC"))
+}
+\arguments{
+\item{access}{Specifies RO or RWC accesss}
 }
 \value{
 a DBI connection object

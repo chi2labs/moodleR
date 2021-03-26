@@ -4,10 +4,12 @@
 \alias{mdl_get_connection}
 \title{Connect to Moodle Data}
 \usage{
-mdl_get_connection(use_cache = TRUE)
+mdl_get_connection(use_cache = TRUE, config = "default")
 }
 \arguments{
 \item{use_cache}{If TRUE (the default) connection to the local cache is returned.}
+
+\item{config}{Select configuration from config file}
 }
 \value{
 a DBI connection object

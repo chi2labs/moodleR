@@ -5,8 +5,6 @@
 #' @importFrom rlang inform
 #' @return a character vector with the directory path
 #' @export
-#'
-#' @examples
 mdl_get_cache_dir <- function() {
   ret <- config::get("moodleR")$cache_dir
   if (is.null(ret)) {
