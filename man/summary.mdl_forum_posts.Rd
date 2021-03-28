@@ -4,7 +4,7 @@
 \alias{summary.mdl_forum_posts}
 \title{Summary of mdl_forum_posts Object}
 \usage{
-summary.mdl_forum_posts(object, ...)
+\method{summary}{mdl_forum_posts}(object, ...)
 }
 \arguments{
 \item{object}{a lazy tbl reference with class mdl_grades}

@@ -6,7 +6,7 @@
 #' @param config Select configuration from config file
 #'
 #' @import DBI
-#' @import RMySQL
+#' @import RMariaDB
 #' @return a DBI connection object
 #' @export
 mdl_get_connection <- function(
@@ -21,11 +21,12 @@ mdl_get_connection <- function(
   # mySQL connection
   myConf <- config::get(config = config)
   DBI::dbConnect(
-    MySQL(),
+    RMariaDB::MariaDB(),
     user = myConf$moodleR$user,
     password = myConf$moodleR$password,
     dbname = myConf$moodleR$dbname,
-    host = myConf$moodleR$host
+    host = myConf$moodleR$host,
+    bigint = "integer64"
   )
 }
 

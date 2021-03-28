@@ -4,7 +4,7 @@
 \alias{summary.mdl_users}
 \title{Summary of mdl_users Object}
 \usage{
-summary.mdl_users(object, ...)
+\method{summary}{mdl_users}(object, ...)
 }
 \arguments{
 \item{object}{a lazy tbl reference with class mdl_grades}

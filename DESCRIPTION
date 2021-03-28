@@ -27,6 +27,7 @@ Imports:
     stringr,
     rlang,
     scales,
-    RMySQL
+    RMySQL,
+    RMariaDB
 RdMacros: lifecycle
 RoxygenNote: 7.1.1

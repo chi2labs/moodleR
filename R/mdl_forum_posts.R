@@ -12,23 +12,9 @@
 mdl_forum_posts <- function(
   con = mdl_get_connection()
 ) {
-  ret <- tbl(con, "posts") %>%
-  select(
-    id,
-    discussion = forumId,
-    parent,
-    created = created_raw,
-    userid = participantId,
-    courseid = courseId,
-    subject,
-    message = cleansedMessage,
-    wordcount = wordCount,
-    forum_name,
-    forum_id = forumId,
-    thread_name
-  )
 
+  ret <- tbl(con, "posts")
   class(ret) <- c(class(ret), "mdl_forum_posts")
-
   ret
+
 }

@@ -13,8 +13,7 @@ mdl_courses <- function(
   con = mdl_get_connection()
 ) {
   ret <- tbl(con, "courses") %>%
-    mutate(id = courseid) %>%
-    rename(courseid = courseId)
+    mutate(id = courseid)
   class(ret) <- c(class(ret), "mdl_courses")
   ret
 }
