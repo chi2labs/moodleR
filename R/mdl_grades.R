@@ -10,8 +10,8 @@
 mdl_grades <- function(
   con = mdl_get_connection()
 ) {
-  ret <- tbl(con, "grades") %>%
-  rename(userid = participantId) #TODO: temporary mapping
+  ret <- tbl(con, "grades")
   class(ret) <- c(class(ret), "mdl_grades")
   ret
 }
+

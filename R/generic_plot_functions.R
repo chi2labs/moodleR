@@ -45,7 +45,7 @@ plot.mdl_log <- function() {
 plot.mdl_grades <- function(x, ...) {
   x %>%
     filter(rawgrademax > 0) %>%
-    mutate(normalized_grade = finalGrade / rawgrademax) %>%
+    mutate(normalized_grade = rawgrade / rawgrademax) %>%
     filter(!is.na(normalized_grade)) %>%
     filter(normalized_grade <= 1) %>%
     ggplot(aes(normalized_grade)) +

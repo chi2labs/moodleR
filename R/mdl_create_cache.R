@@ -11,10 +11,10 @@
 #' @param tbl_prefix Moodle DB table prefix
 #' @import config
 #' @import rlang
-#' @import glue
+#' @importFrom glue glue
 #'
 #' @export
-mdl_create_cache <- function(con,
+mdl_create_cache <- function(con = mdl_get_connection(use_cache = FALSE),
                              format=c("sqlite"),
                              views = TRUE,
                              tables = c("base"),
@@ -25,7 +25,7 @@ mdl_create_cache <- function(con,
 
   # Get connection to Moodle DB
   inform("Gettng Moodle DB connection")
-  moodle_connection <- mdl_get_connection(use_cache = FALSE)
+  moodle_connection <- con
 
   inform("Gettng sqlite connection")
   # Get connection to sqlite
@@ -37,7 +37,7 @@ mdl_create_cache <- function(con,
   # Course Table####
   inform("Downloading course table")
 
-  myCourses <-
+  my_courses <-
     tbl(moodle_connection, glue("{tbl_prefix}course")) %>%
     mutate(courseid = id) %>%
     mutate(categoryid = category) %>%
@@ -48,54 +48,82 @@ mdl_create_cache <- function(con,
     collect()
 
   inform("Caching course table")
-  DBI::dbWriteTable(sqlite_connection, "courses", myCourses)
+  DBI::dbWriteTable(sqlite_connection, "courses", my_courses)
+  rm(my_courses)
 
   # Discussion posts ####
   inform("Downloading discussion posts table")
-  posts_query <-
-    glue('SELECT f.course as courseid,
-  fp.userid,
-  f.id as forum_id,
-  f.name as forum_name,
-  f.intro as forum_desc,
-  f.name as thread_name,
-  fp2.id as id,
-  fp.discussion as discussion_id,
-  fp.subject as subject,
-  fp.message as message,
-  fp.parent as parent_discussion_id,
-  fp2.userid as parent_discussion_participant_id,
-  fp.wordcount,
-  fp.created,
-  fp.modified
-  FROM {tbl_prefix}forum_posts fp
-  LEFT JOIN  {tbl_prefix}forum_discussions fd ON fd.id = fp.discussion
-  LEFT JOIN {tbl_prefix}forum f ON fd.forum = f.id
-  LEFT JOIN {tbl_prefix}forum_posts fp2 ON fp2.parent = fp.id')
 
-  myPosts <- DBI::dbGetQuery(moodle_connection, posts_query)
+  my_posts <-
+    DBI::dbGetQuery(moodle_connection,
+                    mdl_posts_query(tbl_prefix))
+
   inform("Caching discussion posts table")
   DBI::dbWriteTable(sqlite_connection, "posts",
-                    myPosts %>%
+                    my_posts %>%
                       collect())
+  rm(my_posts)
 
 
   # Users table ####
   inform("Downloading user table")
 
-  myUsers <-
+  my_users <-
     tbl(moodle_connection, glue("{tbl_prefix}user")) %>%
     mutate(userid = id)
-
+  inform("Caching user table")
   DBI::dbWriteTable(sqlite_connection, "user",
-                    myUsers %>%
+                    my_users %>%
                       collect())
+  rm(my_users)
 
+    # Grades table ####
   inform("Downloading grades table")
-  myGrades <-
-    tbl(moodle_connection, glue({tbl_prefix},grades))
+  my_grades <-
+    DBI::dbGetQuery(moodle_connection, mdl_grades_query(tbl_prefix))
 
-  ## Clean up ####
+  inform("Caching grades table")
+  DBI::dbWriteTable(sqlite_connection, "grades",
+                    my_grades %>% collect())
+  rm(my_grades)
+
+  # Moodle config ####
+  inform("Downloading config table")
+  my_config_tbl <-
+    tbl(moodle_connection, glue("{tbl_prefix}config"))
+  DBI::dbWriteTable(sqlite_connection, "mdl_config",
+                    my_config_tbl %>% collect())
+  rm(my_config_tbl)
+
+  # Log tables ####
+  inform("Downloading log table")
+  my_moodle_log <-
+    tbl(moodle_connection, glue("{tbl_prefix}logstore_standard_log"))
+  inform("Caching log table")
+  DBI::dbWriteTable(sqlite_connection, "standard_log",
+                    my_moodle_log %>% collect())
+  rm(my_moodle_log)
+
+  # Roles
+  inform("Downloading roles table")
+  my_roles <-
+    tbl(moodle_connection, glue("{tbl_prefix}role"))
+  inform("Caching role table")
+  DBI::dbWriteTable(sqlite_connection, "role",
+                    my_roles %>% collect())
+  rm(my_roles)
+
+
+  # Enrolment ####
+  inform("Downloading enrolments")
+  my_enrolments <-
+    tbl(moodle_connection, glue("{tbl_prefix}user_enrolments"))
+  inform("Caching enrolments")
+  DBI::dbWriteTable(sqlite_connection, "enrolments",
+                    my_enrolments %>% collect())
+  rm(my_enrolments)
+
+  # Clean up ####
   DBI::dbDisconnect(sqlite_connection)
   DBI::dbDisconnect(moodle_connection)
 }

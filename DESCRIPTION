@@ -28,6 +28,9 @@ Imports:
     rlang,
     scales,
     RMySQL,
-    RMariaDB
+    RMariaDB,
+    glue,
+    config,
+    anytime
 RdMacros: lifecycle
 RoxygenNote: 7.1.1

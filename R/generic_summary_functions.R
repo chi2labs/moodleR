@@ -17,13 +17,16 @@ summary.mdl_forum_posts <- function(object, ...) {
       "Missing data" = sum(is.na(message)),
       Courses = n_distinct(courseid),
       Users = n_distinct(userid),
-      "Word count" = sum(wordcount, na.rm = TRUE),
+      ##"Word count" = sum(wordcount, na.rm = TRUE),
       Threads = n_distinct(thread_name),
       "Date range" = "----",
-      "First post" = min(created, na.rm = TRUE),
-      "Most recent" = max(created, na.rm = TRUE)
+      mintime = min(created, na.rm = TRUE),
+      maxtime= max(created, na.rm = TRUE)
     ) %>%
-    collect()
+    collect() %>%
+    mutate("First post" = anytime(mintime),
+           "Last post" = anytime(maxtime)) %>%
+    select(-mintime, -maxtime)
   class(ret) <- c("mdl_post_summary", class(ret))
   ret
 
@@ -40,16 +43,16 @@ summary.mdl_forum_posts <- function(object, ...) {
 #' @export
 summary.mdl_grades <- function(object, ...) {
   ret <- object %>%
-    mutate(normalized_grades = finalGrade / rawgrademax) %>%
+    mutate(normalized_grade = rawgrade / rawgrademax) %>%
     summarize(
       "# of Grades" = n(),
-      "Missing" = sum(is.na(finalGrade)),
+      "Missing" = sum(is.na(rawgrade)),
       Courses = n_distinct(courseid),
       Users = n_distinct(userid),
       "Normalized Grades" = "",
-      "Median" = median(normalized_grades, na.rm = TRUE),
-      "Mean" = mean(normalized_grades, na.rm = TRUE),
-      "SD" = sd(normalized_grades, na.rm = TRUE),
+      "Median" = median(normalized_grade, na.rm = TRUE),
+      "Mean" = mean(normalized_grade, na.rm = TRUE),
+      "SD" = sd(normalized_grade, na.rm = TRUE),
     ) %>%
     collect()
   class(ret) <- c("mdl_grades_summary", class(ret))
