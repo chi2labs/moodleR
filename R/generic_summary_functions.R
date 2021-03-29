@@ -7,6 +7,7 @@
 #' @param ... currently ignored
 #'
 #' @import dplyr
+#' @import anytime
 #' @return a tibble with the summary.
 #' @export
 summary.mdl_forum_posts <- function(object, ...) {
