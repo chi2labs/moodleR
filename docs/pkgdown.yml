@@ -1,7 +1,11 @@
-pandoc: '2.7'
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  getting_started: getting_started.html
-last_built: 2021-03-26T14:12Z
+  analysis-of-grades: analysis-of-grades.html
+  calculating-time-on-task: calculating-time-on-task.html
+  getting-started: getting-started.html
+  setup: setup.html
+  simple-predictive-model: simple-predictive-model.html
+last_built: 2021-03-29T21:58Z
 

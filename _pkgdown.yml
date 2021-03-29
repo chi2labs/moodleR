@@ -1,3 +1,16 @@
 template:
   params:
     bootswatch: cerulean
+articles:
+ - title: "Getting Started"
+   navbar: "Getting Started"
+   contents:
+    - setup
+    - getting-started
+ - title: "Examples & Recipies"
+   navbar: "Examples"
+   contents:
+     - analysis-of-grades
+     - calculating-time-on-task
+     - simple-predictive-model
+

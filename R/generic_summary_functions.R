@@ -15,7 +15,7 @@ summary.mdl_forum_posts <- function(object, ...) {
     object %>%
     summarize(
       "# of posts" = n(),
-      "Missing data" = sum(is.na(message)),
+      "Missing data" = sum(is.na(message), na.rm = TRUE),
       Courses = n_distinct(courseid),
       Users = n_distinct(userid),
       ##"Word count" = sum(wordcount, na.rm = TRUE),
