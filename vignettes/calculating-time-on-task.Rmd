@@ -1,0 +1,19 @@
+---
+title: "Calculating Time on Task"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{calculating-time-on-task}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(moodleR)
+```

@@ -5,7 +5,7 @@
 \title{Creates a Local Cache}
 \usage{
 mdl_create_cache(
-  con,
+  con = mdl_get_connection(use_cache = FALSE),
   format = c("sqlite"),
   views = TRUE,
   tables = c("base"),

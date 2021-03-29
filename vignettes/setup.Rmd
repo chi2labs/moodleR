@@ -1,0 +1,115 @@
+---
+title: "Basic Setup"
+author: "Aleksander Dietrichson, PhD ( $\\chi^\\color{red}2$ Laboratories)"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with the moodleR package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The moodleR package contains functions and algorithms to access Moodle$^{TM}$ data and perform reporting and/or learning analytics based in these data. For more information about Moodle go to [www.moodle.org](http://www.moodle.org). For more information about $\chi^\color{red}2$ (chi square) Laboratories and the work we do in learning analytics, visit our website: [www.chi2labs.com](http://www.chi2labs.com).
+
+## Installing and loadng the package
+
+To install the latest stable release from CRAN use:
+
+```{r setup, eval=FALSE}
+install.packages("moodleR")
+```
+
+To install the latest development version:
+```{r, eval=FALSE}
+devtools::install("chi2labs/moodleR")
+```
+
+
+After which the package is attached in the usual way.
+```{r}
+library(moodleR)
+```
+
+## Connecting to a Moodle Database
+
+### Configuration
+When connecting to a moodle database moodleR will look for database information 
+in a config file (config.yml). The fields that need to be included can be seen in the snipped below:
+
+```{yaml}
+default:
+  moodleR:
+    user: "root"
+    password: "root"
+    dbname: "moodle38"
+    host: "localhost"
+    port: 3306
+```
+
+### Connecting to a moodle DB instance
+
+Once the connection information available you can get a connection to the database by calling `mdl_get_connection()`, with the `use_cache` set to false:
+
+```{r, eval=FALSE}
+mdl_con <- mdl_get_connection(use_cache = FALSE)
+```
+
+The reason for `use_cache = FALSE` will be explained below.
+
+## Caching Data
+
+The moodleR package allows you to create a cache of the most relevant data on
+your local computer. 
+
+There are several reasons you would want to cache data locally rather than 
+operating directly on a moodle database:
+
+* You don't want to create additional server traffic that will worry the system administrator and generate bandwidth and hardware charges.
+* You are experimenting with exotic new features and want to avoid any accidents which may get you banned from accessing the data in the future
+* You only need a subset of courses
+* You are conducting exploratory research a sample of courses and want to make sure you data stays stable during your experimentation
+* You want your Notebooks and Rmarkdown document to compile faster
+
+The moodleR package provides a method `moodle_cache` which allows for local caching of the data. 
+
+### Caching to sqlite
+When you run the `moodle_cache` function moodleR will create a local directory `mdl_cache` in your working directory. In this directory an sqlite database, `mdl_cache.sqlite`, will be created to contain the cached tables.
+
+```{r, eval = FALSE}
+mdl_create_cache()
+```
+
+The output should look someting like this:
+```
+#> Gettng Moodle DB connection
+#> Gettng sqlite connection
+#> Directory ' /home/sasha/chi2/moodleR/mdl_cache' used by default. 
+#> Set config variable in moodleR:mdl_cache_dir to override.
+#> This message is displayed once per session.
+#> Filename 'mdl_cache.sqlite' used by default. 
+#> Set config variable in moodleR:mdl_cache_dir to override.
+#> Cache file created: /home/sasha/chi2/moodleR/mdl_cache/mdl_cache.sqlite
+#> Downloading course table
+#> Joining, by = "categoryid"
+#> Caching course table
+#> Downloading discussion posts table
+#> Caching discussion posts table
+#> Downloading user table
+#> Caching user table
+#> Downloading grades table
+#> Caching grades table
+#> Downloading config table
+#> Downloading log table
+#> Caching log table
+#> Downloading roles table
+#> Caching role table
+#> Downloading enrolments
+#> Caching enrolments
+```
+

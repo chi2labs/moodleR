@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Connection to Cached Moodle Data — mdl_get_cache_connection • moodleR</title>
+<title>Moodle Configuration Table — mdl_config • moodleR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Connection to Cached Moodle Data — mdl_get_cache_connection" />
-<meta property="og:description" content="Connection to Cached Moodle Data" />
+<meta property="og:title" content="Moodle Configuration Table — mdl_config" />
+<meta property="og:description" content="Get the complete moodle configuration table.
+Different from most mdl_* functions this function calls dplyr::collect()
+before returning (as a config-table is not going to cause memory overflow)." />
 
 
 
@@ -134,29 +136,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Connection to Cached Moodle Data</h1>
+    <h1>Moodle Configuration Table</h1>
     
-    <div class="hidden name"><code>mdl_get_cache_connection.Rd</code></div>
+    <div class="hidden name"><code>mdl_config.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Connection to Cached Moodle Data</p>
+    <p>Get the complete moodle configuration table.
+Different from most mdl_* functions this function calls dplyr::collect()
+before returning (as a config-table is not going to cause memory overflow).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mdl_get_cache_connection</span><span class='op'>(</span>access <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"RO"</span>, <span class='st'>"RWC"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mdl_config</span><span class='op'>(</span>con <span class='op'>=</span> <span class='fu'><a href='mdl_get_connection.html'>mdl_get_connection</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>access</th>
-      <td><p>Specifies RO or RWC accesss</p></td>
+      <th>con</th>
+      <td><p>database connection object</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a DBI connection object</p>
+    <p>A tibble</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
