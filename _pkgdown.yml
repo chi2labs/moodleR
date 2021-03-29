@@ -7,8 +7,8 @@ articles:
    contents:
     - setup
     - getting-started
- - title: "Examples & Recipies"
-   navbar: "Examples"
+ - title: "Examples & Recipes"
+   navbar: "Examples & Recipes"
    contents:
      - analysis-of-grades
      - calculating-time-on-task
