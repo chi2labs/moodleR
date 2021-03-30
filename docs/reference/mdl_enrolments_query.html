@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Moodle Grades — plot.mdl_grades • moodleR</title>
+<title>Raw query for discussion posts — mdl_enrolments_query • moodleR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot Moodle Grades — plot.mdl_grades" />
-<meta property="og:description" content="Histogram (density) of normalized grades" />
+<meta property="og:title" content="Raw query for discussion posts — mdl_enrolments_query" />
+<meta property="og:description" content="Raw query for discussion posts" />
 
 
 
@@ -134,34 +134,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Moodle Grades</h1>
+    <h1>Raw query for discussion posts</h1>
     
-    <div class="hidden name"><code>plot.mdl_grades.Rd</code></div>
+    <div class="hidden name"><code>mdl_enrolments_query.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Histogram (density) of normalized grades</p>
+    <p>Raw query for discussion posts</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for mdl_grades</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mdl_enrolments_query</span><span class='op'>(</span><span class='va'>tbl_prefix</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a lazy tbl reference with class mdl_forum_posts</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>passed to ggplot</p></td>
+      <th>tbl_prefix</th>
+      <td><p>for moodle</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot</p>
+    <p>character vector with moodle query</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
