@@ -4,15 +4,17 @@
 \alias{plot.mdl_grades}
 \title{Plot Moodle Grades}
 \usage{
-\method{plot}{mdl_grades}(x, ...)
+\method{plot}{mdl_grades}(x, use_base_graphics = FALSE, ...)
 }
 \arguments{
-\item{x}{a lazy tbl reference with class mdl_forum_posts}
+\item{x}{a lazy tbl reference}
 
-\item{...}{passed to ggplot}
+\item{use_base_graphics}{Should base graphics be used (instead of ggplot)}
+
+\item{...}{passed along to ggplot or base graphic function}
 }
 \value{
-A ggplot
+A ggplot or base  graphic plot
 }
 \description{
 Histogram (density) of normalized grades

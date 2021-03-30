@@ -4,12 +4,14 @@
 \alias{plot.mdl_forum_posts}
 \title{Wordcloud Plot}
 \usage{
-\method{plot}{mdl_forum_posts}(x, ...)
+\method{plot}{mdl_forum_posts}(x, use_base_graphics = FALSE, ...)
 }
 \arguments{
-\item{x}{a lazy tbl reference with class mdl_forum_posts}
+\item{x}{a lazy tbl reference or data.frame.}
 
-\item{...}{passed to ggplot}
+\item{use_base_graphics}{Should base graphics be produces instead of ggplot?}
+
+\item{...}{passed to ggplot or base graphics}
 }
 \value{
 A ggplot

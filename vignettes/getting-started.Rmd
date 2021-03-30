@@ -14,68 +14,96 @@ knitr::opts_chunk$set(
 )
 ```
 
-The moodleR package contains functions and algorithms to access Moodle$^{TM}$ data and perform reporting and/or learning analytics based in these data. For more information about Moodle go to [www.moodle.org](http://www.moodle.org). For more information about $\chi^\color{red}2$ (chi square) Laboratories and the work we do in learning analytics, visit our website: [www.chi2labs.com](http://www.chi2labs.com).
+This vignette assumes that you have already been able to set up the connection to a Moodle Database and created a local cache (if chosen).
 
-## Installing and loadng the package
-
-To install the latest stable release from CRAN use:
-
-```{r setup, eval=FALSE}
-install.packages("moodleR")
-```
-
-To install the latest development version:
-```{r, eval=FALSE}
-devtools::install("chi2labs/moodleR")
-```
-
-
-After which the package is attached in the usual way.
-```{r}
+```{r setup}
 library(moodleR)
+library(ggplot2)
 ```
 
-## Connecting to a Moodle Database
+## Data access functions
 
-### Configuration
-When connecting to a moodle database moodleR will look for database information 
-in a config file (config.yml). The fields that need to be included can be seen in the snipped below:
+Learning analytics practitioners working with LMS data will often be interested in a sub-set of the available tables with relevant references added. These can be accessed through several mdl_* functions which will connect to the relevant table(s) and return a reference to the data. Currently the package supports curated access through the following functions:
 
-```{yaml}
-default:
-  moodleR:
-    user: "root"
-    password: "root"
-    dbname: "moodle38"
-    host: "localhost"
-    port: 3306
+* `mdl_courses()`
+* `mdl_forum_posts()`
+* `mdl_grades()`
+* `mdl_log()`
+* `mdl_users()`
+
+
+For example:
+
+```{r, message=FALSE}
+my_grades <- mdl_grades()
 ```
 
-### Connecting to a moodle DB instance
+creates an R object named `my_grades` containing the dbplyr reference to the table in question. 
 
-Once the connection information available you can get a connection to the database by calling `mdl_get_connection()`, with the `use_cache` set to false:
+## Summary functions
 
-```{r, eval=FALSE}
-mdl_con <- mdl_get_connection(use_cache = FALSE)
+The R generic `summary` function is implemented with sensible defaults so that:
+
+```{r}
+summary(my_grades)
 ```
 
-The reason for `use_cache = FALSE` will be explained below.
+provides useful information for the learning analytics preactitioner.
 
-## Caching Data
+## Plot functions
 
-The moodleR package allows you to create a cache of the most relevant data on
-your local computer. 
+Generic plot functions are also provided for all data-access objects:
 
-There are several reasons you would want to cache data locally rather than 
-operating directly on a moodle database:
+```{r}
+plot(my_grades)
+```
 
-* You don't want to create additional server traffic that will worry the system administrator and generate bandwidth and hardware charges.
-* You are experimenting with exotic new features and want to avoid any accidents which may get you banned from accessing the data in the future
-* You only need a subset of courses
-* You are conducting exploratory research a sample of courses and want to make sure you data stays stable during your experimentation
-* You want your Notebooks and Rmarkdown document to compile faster
+The plot functions return a ggplot by default. If you prefer base graphics you can call the function thus:
 
-The moodleR package provides a method `moodle_cache` which allows for local caching of the data. 
+```{r}
+plot(my_grades, use_base_graphics = TRUE)
+```
 
-### Caching to sqlite
-When you run the `moodle_cache` function moodleR will create a local directory `mdl_cache` in your working directory 
+
+## Additional columns
+
+For convenience some additional columns have been added to the tables. These are all snake_case and are thus easy to spot:
+
+```{r}
+library(dplyr)
+my_grades %>% 
+  select(contains("_")) %>% 
+  colnames()
+```
+
+## Objects of class dbplyr
+
+The return value from the data-access functions are also dbplyr tables so dbplyr verbs and operation work on them as well. For example:
+
+```{r}
+my_grades %>% 
+  filter(courseid == 4957) %>% 
+  summary()
+```
+
+```{r, warning=FALSE}
+my_grades %>% 
+  filter(courseid == 4957) %>% 
+  plot()
+```
+
+## Using ggplot objects
+
+Since the return value of a plot function is a ggplot object it is of course possible to add and/or manipulate the plot using the syntax from the ggplot2 package. For example by annotating the plot:
+
+```{r}
+my_plot <- mdl_grades() %>% 
+  plot()
+my_plot +
+  annotate("text",.45,10^5, label="Passing Grade",cex=5)+
+  annotate("segment",x=.6,y=10^5,xend=.6,yend=0, lty=2)
+  
+  
+```
+
+

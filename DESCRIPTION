@@ -2,15 +2,20 @@ Package: moodleR
 Type: Package
 Title: Helper Functions to Work with Moodle Data
 Version: 0.3.0
-Authors@R: c(
-             person(given = "Aleksander", family="Dietrichson", 
-             email = "sasha@chi2labs.com", 
-                role = c("aut", "cre")),
-            person(given = "Chi Square Laboratories", role =c("cph") ),
-            person(given = "Darko", family = "Miletic", role = c("ctb")),
-            person(given = "Pablo", family = "Pagnone", role = c("ctb"))
-             )
-Maintainer: Aleksander Dietrichson <sasha@chi2labs.com>
+Authors@R: 
+    c(person(given = "Aleksander",
+             family = "Dietrichson",
+             role = c("aut", "cre"),
+             email = "dietrichson@gmail.com"),
+      person(given = "Chi Square Laboratories",
+             role = "cph"),
+      person(given = "Darko",
+             family = "Miletic",
+             role = "ctb"),
+      person(given = "Pablo",
+             family = "Pagnone",
+             role = "ctb"))
+Maintainer: Aleksander Dietrichson <dietrichson@gmail.com>
 Description: The package contains functions to connect to a Moodle database, cache relevant tables locally and generate learning analytics. 
     Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit www.moodle.org.
 License: MIT + file LICENSE

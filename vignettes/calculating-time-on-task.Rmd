@@ -1,5 +1,6 @@
 ---
 title: "Calculating Time on Task"
+author: "Aleksander Dietrichson, PhD"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{calculating-time-on-task}
@@ -14,6 +15,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+
+
+
+## Definition
+
+$$
+dt =    \sum_{i=1}^{|X|} 
+\begin{cases}
+    x_{i-1}-x_i,& \text{if } x_{i-1}-x_i\leq \theta\\
+    0,              & \text{otherwise}
+\end{cases}
+$$
+
+Where:
+
+* $X$ is a series of log-entries sorted in descending order by their timestamp,
+* $i$ is the index,
+* $x_i$ denotes the individual items in the series $X$
+* $\theta$ is the timeout parameter (i.e. max idle time before we assume a new session)
+
+## Algorithm
+
+## Implementation from moodle log
+
+Let's start by loading the `moodleR` package
+
+```{r}
 library(moodleR)
 ```
+

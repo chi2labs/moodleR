@@ -1,6 +1,5 @@
 ---
 title: "Basic Setup"
-author: "Aleksander Dietrichson, PhD ( $\\chi^\\color{red}2$ Laboratories)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Setup}
