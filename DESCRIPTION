@@ -3,7 +3,8 @@ Type: Package
 Title: Helper Functions to Work with Moodle Data
 Version: 0.3.0
 Authors@R: c(
-             person(given = "Aleksander", family="Dietrichson", email = "dietrichson@gmail.com", 
+             person(given = "Aleksander", family="Dietrichson", 
+             email = "sasha@chi2labs.com", 
                 role = c("aut", "cre")),
             person(given = "Chi Square Laboratories", role =c("cph") ),
             person(given = "Darko", family = "Miletic", role = c("ctb")),

@@ -3,7 +3,7 @@ title: "Basic Setup"
 author: "Aleksander Dietrichson, PhD ( $\\chi^\\color{red}2$ Laboratories)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with the moodleR package}
+  %\VignetteIndexEntry{Setup}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
