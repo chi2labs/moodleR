@@ -112,12 +112,26 @@ my_timeseries_2 %>%
   scale_y_continuous(labels=scales::label_number_si())
 ```
 
-A seasonal pattern is obvious, and clearly the activity mostly follows a weekly pattern. We can use either of the subsets of data to create an arima model, available in the `stats` package. We set the order and period parameters for a vanilla prediction.
+A seasonal pattern is obvious, and clearly the activity mostly follows a weekly pattern. 
+
+## Forecasting with ARIMA
+
+We can use either of the subsets of data to create an arima model, available in the `stats` package. We set the order and period parameters to estimate a fit.
 
 ```{r}
-my_model_2 <- arima(my_timeseries_2$Users,
-                    seasonal = list (order = c(3L, 0L, 0L), period = 7L))
+my_model_2 <- 
+  arima(
+    my_timeseries_2$Users,
+    seasonal = list (order = c(3L, 0L, 0L), period = 7L)
+  )
 ```
+
+### Model Output
+
+```{r}
+my_model_2
+```
+
 
 We can now use the model to predict the number of unique users for the next month:
 ```{r}
@@ -125,6 +139,9 @@ my_pred <- predict(my_model_2,30)$pred
 ```
 
 ### Visualize the Prediction
+
+We can use ggplot to visualize the prediction made by our model.
+
 ```{r}
 start_date <- max(my_timeseries_2$date)-1
 data.frame(date = start_date + 1:length(my_pred), Users = my_pred) -> predicted_users_2
@@ -134,13 +151,17 @@ predicted_users_2 %>%
   scale_y_continuous(labels=scales::label_number_si())
 ```
 
-And we can combine the two in one plot
+And we can combine the two in one plot. For this we will need to create a `data.frame` since this is what ggplot expects as input.
 
 ```{r}
 my_timeseries_2 %>%
   select(date,Users) %>% 
   mutate(Type = "Observed") %>% 
-  rbind(predicted_users_2 %>% mutate(Type = "Predicted")) -> combined_ts
+  rbind(
+    predicted_users_2 %>% 
+      mutate(Type = "Predicted")
+  ) -> combined_ts
+
 my_plot <- combined_ts %>% 
   ggplot(aes(date,Users, color = Type))+
   geom_line() +
@@ -152,7 +173,7 @@ And we can see that the prediction is consistent with the observed pattern and g
 
 THis trend can also be visualized by adding a geom_smooth to the plot.
 
-```{r}
+```{r,  message=FALSE}
 my_plot +
   geom_smooth(
     se=FALSE, 

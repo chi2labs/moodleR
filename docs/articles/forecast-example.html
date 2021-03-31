@@ -178,40 +178,69 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels<span class="op">=</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="forecast-example_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<p>A seasonal pattern is obvious, and clearly the activity mostly follows a weekly pattern. We can use either of the subsets of data to create an arima model, available in the <code>stats</code> package. We set the order and period parameters for a vanilla prediction.</p>
+<p>A seasonal pattern is obvious, and clearly the activity mostly follows a weekly pattern.</p>
+</div>
+</div>
+<div id="forecasting-with-arima" class="section level2">
+<h2 class="hasAnchor">
+<a href="#forecasting-with-arima" class="anchor"></a>Forecasting with ARIMA</h2>
+<p>We can use either of the subsets of data to create an arima model, available in the <code>stats</code> package. We set the order and period parameters to estimate a fit.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_model_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">my_timeseries_2</span><span class="op">$</span><span class="va">Users</span>,
-                    seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3L</span>, <span class="fl">0L</span>, <span class="fl">0L</span><span class="op">)</span>, period <span class="op">=</span> <span class="fl">7L</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>We can now use the model to predict the number of unique users for the next month:</p>
+<code class="sourceCode R"><span class="va">my_model_2</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span>
+    <span class="va">my_timeseries_2</span><span class="op">$</span><span class="va">Users</span>,
+    seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3L</span>, <span class="fl">0L</span>, <span class="fl">0L</span><span class="op">)</span>, period <span class="op">=</span> <span class="fl">7L</span><span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
+<div id="model-output" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model-output" class="anchor"></a>Model Output</h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_model_2</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; arima(x = my_timeseries_2$Users, seasonal = list(order = c(3L, 0L, 0L), period = 7L))</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;         sar1    sar2     sar3  intercept</span>
+<span class="co">#&gt;       0.6761  0.3622  -0.1834   972.0461</span>
+<span class="co">#&gt; s.e.  0.1593  0.1880   0.1672    99.3799</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; sigma^2 estimated as 29454:  log likelihood = -418.57,  aic = 847.14</span></code></pre></div>
+<p>We can now use the model to predict the number of unique users for the next month:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">my_model_2</span>,<span class="fl">30</span><span class="op">)</span><span class="op">$</span><span class="va">pred</span></code></pre></div>
 </div>
 <div id="visualize-the-prediction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualize-the-prediction" class="anchor"></a>Visualize the Prediction</h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p>We can use ggplot to visualize the prediction made by our model.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">start_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">my_timeseries_2</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>date <span class="op">=</span> <span class="va">start_date</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">my_pred</span><span class="op">)</span>, Users <span class="op">=</span> <span class="va">my_pred</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">predicted_users_2</span>
 <span class="va">predicted_users_2</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">Users</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels<span class="op">=</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="forecast-example_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<p>And we can combine the two in one plot</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p><img src="forecast-example_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>And we can combine the two in one plot. For this we will need to create a <code>data.frame</code> since this is what ggplot expects as input.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_timeseries_2</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">Users</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Type <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">predicted_users_2</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Type <span class="op">=</span> <span class="st">"Predicted"</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">combined_ts</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
+    <span class="va">predicted_users_2</span> <span class="op">%&gt;%</span> 
+      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Type <span class="op">=</span> <span class="st">"Predicted"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">-&gt;</span> <span class="va">combined_ts</span>
+
 <span class="va">my_plot</span> <span class="op">&lt;-</span> <span class="va">combined_ts</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">Users</span>, color <span class="op">=</span> <span class="va">Type</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels<span class="op">=</span><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="va">my_plot</span></code></pre></div>
-<p><img src="forecast-example_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="forecast-example_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>And we can see that the prediction is consistent with the observed pattern and generally declining trend.</p>
 <p>THis trend can also be visualized by adding a geom_smooth to the plot.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_plot</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>
     se<span class="op">=</span><span class="cn">FALSE</span>, 
@@ -219,9 +248,8 @@
     data <span class="op">=</span> <span class="va">combined_ts</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">Users</span><span class="op">)</span>,
     inherit.aes <span class="op">=</span> <span class="cn">FALSE</span>, 
     lty<span class="op">=</span><span class="fl">2</span>,
-    color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span>
-<span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<p><img src="forecast-example_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+    color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span></code></pre></div>
+<p><img src="forecast-example_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 </div>
   </div>
