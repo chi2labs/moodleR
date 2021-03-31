@@ -57,45 +57,13 @@ library(dplyr)
 ```
 
 
-### Estimating the timeout parameter
-The `mdl_config()` function will give us access to the site configuration. The 
-
-```{r}
-my_theta <- mdl_config() %>% 
-  filter(name == "sessiontimeout") %>% 
-  pull(value) 
-my_theta
-```
-
-### Sanity check
-
-Our $\theta$ parameter is returned in seconds, we may want to perform a quick sanity check to see if the value makes sence to us. We can convert this to hours *manually* by applying a simple arithmetic operation. Also note that the value is returned as a *character vector*, which means we need to convert it to a *numeric* or *integer* for use in our later calculations:
-
-```{r}
-my_theta <- as.numeric(my_theta)
-```
-
-Making this conversion also works as a check of the value returned since it will throw an error in case it cannot be interpreted as a number. For convering to hours we simply divide by 60*60:
-```{r}
-my_theta / (60*60)
-```
-
-> Note that parenthesis are needed since R assumes the *PEMDAS* order of operations --which we all learned in highschool and subsequently forgot.
-
-Alternatively we can use the excellent [prettyunits](https://rdrr.io/cran/prettyunits/) package by calling `prettyunits::pretty_sec()`:
-
-```{r}
-prettyunits::pretty_sec(my_theta)
-```
-
-So far this looks reasonable. Now let's get take a look at the  log-data:
 
 ```{r}
 my_log <- mdl_log()
 colnames(my_log)
 ```
 
-We see that we have a 'timecreated` column and `userid` which can 
+We see that we have a 'timecreated` column and `userid` which can use to estimate *dwelltime*.
 
 ### Implementation for one user
 
@@ -107,28 +75,103 @@ set.seed(1617201903) #For reproducibility
 First let's get a random user:
 
 ```{r}
-my_user_id <- my_log %>% 
-  sample_n(size = 1) %>% 
+my_user_id <- mdl_log() %>% 
+  head(100000) %>% 
+  slice_sample(n = 1) %>% 
   pull(userid)
 ```
 
 And implement with dplyr verbs:
 
 ```{r}
-dwelltime_estimate <- my_log %>% 
+dwelltime_estimate <- mdl_log() %>% 
   filter(userid == my_user_id) %>% 
-  mutate(dwelltime =  timecreated - lag(timecreated)) %>%
-  mutate(dwelltime = ifelse(dwelltime > my_theta, NA, dwelltime)) %>% 
-  summarize(
-    dwelltime = sum(dwelltime, na.rm = TRUE)
-  ) %>%
-  collect()
-  
-dwelltime_estimate
+  mutate(dwelltime =  timecreated - lag(timecreated))
+
+mean(dwelltime_estimate %>% pull("dwelltime"), na.rm = TRUE) 
+ 
 ```
 
-Again, the number we get is in seconds, so perhaps convert to something more readable:
+### Estimating timeout visually
+
+Thus far we have implemented the algorithm without a $\theta$. This will very likely yield distorded values because it includes differences that span several sessions and time intervals which can be years. Let's take a look at the distribution to ascertain a reasonable value for our $theta$. For this we will use the ggplot2 package.
+
+
 ```{r}
-prettyunits::pretty_sec(dwelltime_estimate$dwelltime)
+library(ggplot2)
+density_plot <-
+dwelltime_estimate %>% 
+  ggplot(aes(dwelltime)) +
+  geom_density()+
+  scale_x_log10(labels = scales::label_number_si())
+density_plot
 ```
+
+
+We see a flattening occurring  around 1000. Perhaps we can round this to 1200 (which corresponds to 20 minutes) for good measure:
+```{r}
+density_plot + 
+  geom_vline(xintercept = 1200, lty=2, color="blue")
+```
+
+So,
+
+```{r}
+my_theta <- 1200
+```
+
+
+```{r}
+dwelltime_estimate %>% 
+  filter(dwelltime <=my_theta) %>% 
+  summarize(total_dwelltime = sum(dwelltime, na.rm = TRUE))
+```
+And human readable: 
+
+```{r}
+dwelltime_estimate %>% 
+  filter(dwelltime <=my_theta) %>% 
+  summarize(total_dwelltime = sum(dwelltime, na.rm = TRUE)) %>% 
+  pull(total_dwelltime) %>% 
+  prettyunits::pretty_sec(compact = TRUE)
+```
+
+## Creating a timeline
+
+It may be of use for the learning analytics researcher to now how the dwelltime is distributed over time. This can be accomplished by converting the `timecreated` column to a date-object using the [anytime](http://dirk.eddelbuettel.com/code/anytime.html) package.
+
+```{r}
+dwelltime_estimate <- dwelltime_estimate %>%
+  filter(dwelltime <= my_theta) %>% 
+  collect() %>% # Since we're using non-dplyr verbs we need to collect
+  mutate(date = anytime::anydate(.data$timecreated)) %>% 
+  group_by(date) %>% 
+  summarize(
+    dwelltime = sum(dwelltime, na.rm = TRUE)
+    )
+
+
+dwelltime_estimate %>% 
+  ggplot(aes(x = date, y = dwelltime)) +
+  geom_line()+
+  scale_y_continuous(labels = prettyunits::pretty_sec, breaks = 1800*1:10)
+
+```
+
+Alternatively we can summarize by week using e.g. [lubridate](https://lubridate.tidyverse.org/):
+
+```{r}
+dwelltime_estimate %>% 
+  mutate(Week = lubridate::week(date)) %>% 
+  group_by(Week) %>% 
+  summarize(
+    dwelltime = sum(dwelltime, na.rm = TRUE)
+  ) %>% 
+  ggplot(aes(x = Week, y = dwelltime))+
+  geom_line() +
+  scale_y_continuous(labels = prettyunits::pretty_sec, breaks = c(1800*1:10))+
+  scale_x_continuous(labels = 1:53, breaks = 1:53)
+```
+
+
 

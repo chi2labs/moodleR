@@ -10,8 +10,7 @@
 mdl_users <- function(
   con = mdl_get_connection()
 ) {
-  ret <- tbl(con, "participants") %>%
-  mutate(userid = participantId)
+  ret <- tbl(con, "user")
   class(ret) <- c(class(ret), "mdl_users")
   ret
 }
