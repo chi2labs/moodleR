@@ -1,0 +1,166 @@
+---
+title: "Forecasting with moodleR"
+author: "Aleksander Dietrichson, PhD"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Forecasting with moodleR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Forecasting is a frequent activity for the learning analytics practitioner. In this example we will explore how to extract and format data with the moodleR package for a forecasting exercise. 
+
+## Loading Packages
+
+In addition to `moodleR` we will be using `dplyr` and `ggplot2` in this example. Let's go ahead and load these packages.
+
+```{r setup, warning=FALSE, message=FALSE}
+library(moodleR)
+library(dplyr)
+library(ggplot2)
+```
+
+## Data Access
+
+For this example we will use the Moodle log, which we can access using the `mdl_log()` function.
+
+```{r, message=FALSE}
+my_log <- mdl_log()
+```
+
+Once we have this reference we can summarize log-lines and unique users per day by using dplyr verbs. Since we intend to convert the `timecreated` column using the `anytime` package, we will need to call `dplyr::collect()` and convert our reference to a tibble.
+
+```{r}
+my_log <- my_log %>% 
+  select(timecreated, userid) %>% 
+  collect()
+```
+
+
+```{r, include=FALSE}
+# Make the example current, by moving the dates
+my_offset <- 
+  as.numeric(as.POSIXct("2020-03-31 17:52:46")) -
+  as.numeric(as.POSIXct("2015-03-31 17:52:46"))
+my_log <- my_log %>% 
+  mutate(timecreated = timecreated + my_offset)
+```
+
+
+```{r}
+my_log %>% 
+  mutate(date = anytime::anydate(timecreated)) %>% 
+  group_by(date) %>% 
+  summarize(
+    N = n(),
+    Users = n_distinct(userid)
+  ) -> my_timeseries
+```
+
+
+## Visualizations
+
+We can now vizualize the data.
+
+```{r}
+my_timeseries %>% 
+  ggplot(aes(date,N))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+  
+```
+
+```{r}
+my_timeseries %>% 
+  ggplot(aes(date,Users))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+```
+
+Two clear patterns emerge, There is a break at the end of March, beginning of April and the semester is over at the beginning of June. Neither of these observations are in any way unexpected, and would probably be arrived at using common sense, with some minimal input from the institution in question.
+
+For the purposes of this example we will divide the dataset into two parts, with a cutoff in early June.
+
+```{r}
+my_cutoff <- as.Date("2020-06-01")
+my_timeseries_1 <- my_timeseries %>% 
+  filter(date <=my_cutoff )
+my_timeseries_2 <- my_timeseries %>% 
+  filter(date > my_cutoff )
+```
+
+### Take a look again
+
+```{r}
+my_timeseries_1 %>% 
+  ggplot(aes(date,Users))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+```
+
+```{r}
+my_timeseries_2 %>% 
+  ggplot(aes(date,Users))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+```
+
+A seasonal pattern is obvious, and clearly the activity mostly follows a weekly pattern. We can use either of the subsets of data to create an arima model, available in the `stats` package. We set the order and period parameters for a vanilla prediction.
+
+```{r}
+my_model_2 <- arima(my_timeseries_2$Users,
+                    seasonal = list (order = c(3L, 0L, 0L), period = 7L))
+```
+
+We can now use the model to predict the number of unique users for the next month:
+```{r}
+my_pred <- predict(my_model_2,30)$pred
+```
+
+### Visualize the Prediction
+```{r}
+start_date <- max(my_timeseries_2$date)-1
+data.frame(date = start_date + 1:length(my_pred), Users = my_pred) -> predicted_users_2
+predicted_users_2 %>% 
+  ggplot(aes(x = date, y = Users))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+```
+
+And we can combine the two in one plot
+
+```{r}
+my_timeseries_2 %>%
+  select(date,Users) %>% 
+  mutate(Type = "Observed") %>% 
+  rbind(predicted_users_2 %>% mutate(Type = "Predicted")) -> combined_ts
+my_plot <- combined_ts %>% 
+  ggplot(aes(date,Users, color = Type))+
+  geom_line() +
+  scale_y_continuous(labels=scales::label_number_si())
+my_plot
+```
+
+And we can see that the prediction is consistent with the observed pattern and generally declining trend. 
+
+THis trend can also be visualized by adding a geom_smooth to the plot.
+
+```{r}
+my_plot +
+  geom_smooth(
+    se=FALSE, 
+    mapping = aes(x=date,y=Users),
+    data = combined_ts %>% select(date,Users),
+    inherit.aes = FALSE, 
+    lty=2,
+    color = "gray")
+  
+```
+

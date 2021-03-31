@@ -47,7 +47,7 @@ summary.mdl_grades <- function(object, ...) {
     mutate(normalized_grade = rawgrade / rawgrademax) %>%
     summarize(
       "# of Grades" = n(),
-      "Missing" = sum(is.na(rawgrade)),
+      "Missing" = sum(is.na(rawgrade), na.rm = TRUE),
       Courses = n_distinct(courseid),
       Users = n_distinct(userid),
       "Normalized Grades" = "",

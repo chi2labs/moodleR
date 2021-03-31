@@ -99,6 +99,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysis of Grades</h1>
+                        <h4 class="author">Aleksander Dietrichson, PhD</h4>
             
       
       
@@ -108,13 +109,121 @@
 
     
     
+<p>Learning analytics practitioners are frequently tasked with analyzing and generating insights from students’ grades. In this article we will explore some techniques using as our source data available through the moodleR package.</p>
+<div id="accessing-the-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#accessing-the-data" class="anchor"></a>Accessing the Data</h2>
+<p>The grades available on the Moodle instance are conveniently accessible through the <code><a href="../reference/mdl_grades.html">mdl_grades()</a></code> function once the library is loaded.</p>
+<p>We will be using <a href="https://dplyr.tidyverse.org/">dplyr</a> verbs and plotting functionality from <a href="https://ggplot2.tidyverse.org/">ggplot2</a> so we can go ahead and load these libraries as well.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">moodleR</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">moodleR</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
+<p>Now get a reference to the grades table</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_grades</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdl_grades.html">mdl_grades</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>And take a preliminary look:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">my_grades</span><span class="op">)</span> 
+<span class="co">#&gt; ----------</span>
+<span class="co">#&gt; # of Grades:      1.4M </span>
+<span class="co">#&gt; Missing:      945.2K </span>
+<span class="co">#&gt; Courses:      2.8K </span>
+<span class="co">#&gt; Users:        22.9K </span>
+<span class="co">#&gt; Normalized Grades:     </span>
+<span class="co">#&gt; Median:       0.967 </span>
+<span class="co">#&gt; Mean:         0.859 </span>
+<span class="co">#&gt; SD:           0.336</span></code></pre></div>
+</div>
+<div id="assessing-the-distribution" class="section level2">
+<h2 class="hasAnchor">
+<a href="#assessing-the-distribution" class="anchor"></a>Assessing the Distribution</h2>
+<p>As pointed out by several learning analytics researchers, e.g. me, grades often have distributions that are <a href="https://www.chi2labs.com/blog/not_normal/">not normal</a>. There are some theoretical reasons for this, the most important two of which are that a) it has a lower and an upper bound and b) it is not a continuous variable.</p>
+<div id="visualization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualization" class="anchor"></a>Visualization</h3>
+<p>MoodleR comes with a generic plot function for Moodle grades which produces a histogram of normalized grades. The grades are normalized by dividing the <code>rawgrade</code> by <code>rawgrademax</code> in the grades table. This mostly produces a number between 0 and 1 which is conveniently interpretable as a percentage.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_grades</span> <span class="op">%&gt;%</span> 
+  <span class="va">plot</span>
+<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_bar).</span></code></pre></div>
+<p><img src="analysis-of-grades_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>In some cases, however, grades are created that are outside of these logical bounds. There may be different reasons for this and consequently different ways of dealing with this sort of anomaly; the easiest of which is, of course, to do as the plot function does: remove the offending observations.</p>
+</div>
+<div id="visualization-with-density-plot" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualization-with-density-plot" class="anchor"></a>Visualization with Density Plot</h3>
+<p>Before proceeding with further exploration let’s apply the same normalization and filters as does the generic plot function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_grades</span> <span class="op">&lt;-</span> <span class="va">my_grades</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>normalized_grade <span class="op">=</span> <span class="va">rawgrade</span><span class="op">/</span><span class="va">rawgrademax</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span>
+    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">normalized_grade</span><span class="op">)</span>,
+    <span class="va">normalized_grade</span> <span class="op">&gt;=</span><span class="fl">0</span>,
+    <span class="va">normalized_grade</span> <span class="op">&lt;=</span><span class="fl">1</span>
+         <span class="op">)</span></code></pre></div>
+<p>Now we can create a dentity plot.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_grades</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">normalized_grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"red"</span>, fill<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span></code></pre></div>
+<p><img src="analysis-of-grades_files/figure-html/unnamed-chunk-6-1.png" width="700"> As we could already see from the histgram the distribution is heavily skewed toward the top, presumably because a lot of grades items have a 100% success rate.</p>
+</div>
+<div id="formal-test" class="section level3">
+<h3 class="hasAnchor">
+<a href="#formal-test" class="anchor"></a>Formal Test</h3>
+<p>We can use the <code>shapiro.test</code> in R to formally test if we can assume the distribution of these data to be normal. This test has a limitation on <span class="math inline">\(N\leq5000\)</span>, so we will need to create a sample, since our dataset is considerably larger.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_grades</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5000</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">normalized_grade</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  .</span>
+<span class="co">#&gt; W = 0.60937, p-value &lt; 2.2e-16</span></code></pre></div>
+<p>The <em>Shapiro-Wilk</em> tests the null-hypothesis of a sample from a normal distribution. As we can easily see this hypothesis is rejected.</p>
+</div>
+</div>
+<div id="assessing-distribution-for-specific-courses" class="section level2">
+<h2 class="hasAnchor">
+<a href="#assessing-distribution-for-specific-courses" class="anchor"></a>Assessing Distribution for Specific Courses</h2>
+<p>If we apply to use this technique for a set of specific courses that we are working on, this is easily done with a <code>dply::filter()</code></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Get a random sample of courseids</span>
+<span class="va">my_sample_ids</span> <span class="op">&lt;-</span>
+  <span class="va">my_grades</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">courseid</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">courseid</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">courseid</span><span class="op">)</span>
+
+<span class="va">my_grades</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">courseid</span> <span class="op">%in%</span> <span class="va">my_sample_ids</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">5000</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">normalized_grade</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Shapiro-Wilk normality test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; data:  .</span>
+<span class="co">#&gt; W = 0.65656, p-value &lt; 2.2e-16</span></code></pre></div>
+<p>We see essentially the same results.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2 class="hasAnchor">
+<a href="#conclusion" class="anchor"></a>Conclusion</h2>
+<p>The non-normal distribution of grades, which is both a theoretical phenomenon and which we have just empirically proved, implies that we will likely be unsuccessful if we endeavor to model these data using parametric methods, such as vanilla linear regression. Luckily there are many non-parametric alternatives that will likely serve us well, such as ordinal and logistic regression.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
