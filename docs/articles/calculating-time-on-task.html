@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculating Time on Task • moodleR</title>
+<title>Estimating Time on Task • moodleR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Calculating Time on Task">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Estimating Time on Task">
 <meta property="og:description" content="moodleR">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -74,7 +74,7 @@
       <a href="../articles/analysis-of-grades.html">Analysis of Grades</a>
     </li>
     <li>
-      <a href="../articles/calculating-time-on-task.html">Calculating Time on Task</a>
+      <a href="../articles/calculating-time-on-task.html">Estimating Time on Task</a>
     </li>
     <li>
       <a href="../articles/simple-predictive-model.html">simple-predictive-model</a>
@@ -98,7 +98,7 @@
       </header><script src="calculating-time-on-task_files/header-attrs-2.7.4/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Calculating Time on Task</h1>
+      <h1 data-toc-skip>Estimating Time on Task</h1>
                         <h4 class="author">Aleksander Dietrichson, PhD</h4>
             
       
@@ -109,11 +109,13 @@
 
     
     
+<p>The learning analytics practitioner will often find it useful to have at their disposal a measure of how much time a student or other participant in a pedagogical process has spent interacting with an activity, course or another specific area. While millisecond precision measurements are unlikely absent the context of a controlled experimental design, we can probably convince ourselves that we can estimate <em>time-on-task</em> or <em>dwelltime</em>, by analyzing log-data, even if these data were created for a different purpose.</p>
 <div id="definition" class="section level2">
 <h2 class="hasAnchor">
 <a href="#definition" class="anchor"></a>Definition</h2>
+<p>One way of estimatig dwelltime <span class="math inline">\(\hat{d}\)</span> is:</p>
 <p><span class="math display">\[
-dt =    \sum_{i=1}^{|X|} 
+\hat{d}  =    \sum_{i=1}^{|X|} 
 \begin{cases}
     x_{i-1}-x_i,&amp; \text{if } x_{i-1}-x_i\leq \theta\\
     0,              &amp; \text{otherwise}
@@ -126,22 +128,66 @@ dt =    \sum_{i=1}^{|X|}
 <li>
 <span class="math inline">\(i\)</span> is the index,</li>
 <li>
-<span class="math inline">\(x_i\)</span> denotes the individual items in the series <span class="math inline">\(X\)</span>
-</li>
+<span class="math inline">\(x_i\)</span> denotes the individual items in the series <span class="math inline">\(X\)</span>, and</li>
 <li>
-<span class="math inline">\(\theta\)</span> is the timeout parameter (i.e. max idle time before we assume a new session)</li>
+<span class="math inline">\(\theta\)</span> is the timeout parameter (i.e. max idle time before we assume a new session).</li>
 </ul>
 </div>
-<div id="algorithm" class="section level2">
+<div id="why-timeout" class="section level2">
 <h2 class="hasAnchor">
-<a href="#algorithm" class="anchor"></a>Algorithm</h2>
+<a href="#why-timeout" class="anchor"></a>Why timeout?</h2>
+<p>When users interact with Moodle they need to log in or otherwise start a session. While they are actively browsing the site they will create log-entries, however, we cannot guarantee that they log out –in fact our experience tells us that they do not. We therefore need to determine how to deal with the <em>last click</em>, and the path of least resistance is to discard this particular observation. Other options include imputing the data-point from the researchers favorite measure of central tendency.</p>
 </div>
-<div id="implementation-from-moodle-log" class="section level2">
+<div id="implementation-with-moodler-tables" class="section level2">
 <h2 class="hasAnchor">
-<a href="#implementation-from-moodle-log" class="anchor"></a>Implementation from moodle log</h2>
-<p>Let’s start by loading the <code>moodleR</code> package</p>
+<a href="#implementation-with-moodler-tables" class="anchor"></a>Implementation with moodleR tables</h2>
+<p>Let’s start by loading the <code>moodleR</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">moodleR</span><span class="op">)</span></code></pre></div>
+<p>We will also be depending on dplyr verbs so:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span></code></pre></div>
+<div id="estimating-the-timeout-parameter" class="section level3">
+<h3 class="hasAnchor">
+<a href="#estimating-the-timeout-parameter" class="anchor"></a>Estimating the timeout parameter</h3>
+<p>The <code><a href="../reference/mdl_config.html">mdl_config()</a></code> function will give us access to the site configuration. The</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdl_config.html">mdl_config</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"sessiontimeout"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span> 
+<span class="co">#&gt; Directory ' /home/sasha/chi2/moodleR/mdl_cache' used by default. Set config variable in moodleR:mdl_cache_dir to override.</span>
+<span class="co">#&gt; This message is displayed once per session.</span>
+<span class="co">#&gt; Filename 'mdl_cache.sqlite' used by default. Set config variable in moodleR:mdl_cache_dir to override.</span>
+<span class="co">#&gt; This message is displayed once per session.</span>
+<span class="va">my_theta</span>
+<span class="co">#&gt; [1] "14400"</span></code></pre></div>
+<div id="sanity-check" class="section level4">
+<h4 class="hasAnchor">
+<a href="#sanity-check" class="anchor"></a>Sanity check</h4>
+<p>Our <span class="math inline">\(\theta\)</span> parameter is returned in seconds, we may want to perform a quick sanity check to see if the value makes sence to us. We can convert this to hours <em>manually</em> by applying a simple arithmetic operation. Also note that the value is returned as a <em>character vector</em>, which means we need to convert it to a <em>numeric</em> or <em>integer</em> for use in our later calculations:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">my_theta</span><span class="op">)</span></code></pre></div>
+<p>Making this conversion also works as a check of the value returned since it will throw an error in case it cannot be interpreted as a number. For convering to hours we simply divide by 60*60:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_theta</span> <span class="op">/</span> <span class="op">(</span><span class="fl">60</span><span class="op">*</span><span class="fl">60</span><span class="op">)</span>
+<span class="co">#&gt; [1] 4</span></code></pre></div>
+<blockquote>
+<p>Note that parenthesis are needed since R assumes the <em>PEMDAS</em> order of operations –which we all learned in highschool and subsequently forgot.</p>
+</blockquote>
+<p>Alternatively we can use the excellent <a href="https://rdrr.io/cran/prettyunits/">prettyunits</a> package by calling <code><a href="https://rdrr.io/pkg/prettyunits/man/pretty_sec.html">prettyunits::pretty_sec()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">prettyunits</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/prettyunits/man/pretty_sec.html">pretty_sec</a></span><span class="op">(</span><span class="va">my_theta</span><span class="op">)</span>
+<span class="co">#&gt; [1] "4h"</span></code></pre></div>
+</div>
+</div>
 </div>
   </div>
 

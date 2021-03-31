@@ -1,5 +1,5 @@
 ---
-title: "Calculating Time on Task"
+title: "Estimating Time on Task"
 author: "Aleksander Dietrichson, PhD"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,13 +15,16 @@ knitr::opts_chunk$set(
 )
 ```
 
+The learning analytics practitioner will often find it useful to have at their disposal a measure of how much time a student or other participant in a pedagogical process has spent interacting with an activity, course or another specific area. While millisecond precision measurements are unlikely absent the context of a controlled experimental design, we can probably convince ourselves that we can estimate *time-on-task* or *dwelltime*, by analyzing log-data, even if these data were created for a different purpose.
 
 
 
 ## Definition
 
+One way of estimatig dwelltime $\hat{d}$ is: 
+
 $$
-dt =    \sum_{i=1}^{|X|} 
+\hat{d}  =    \sum_{i=1}^{|X|} 
 \begin{cases}
     x_{i-1}-x_i,& \text{if } x_{i-1}-x_i\leq \theta\\
     0,              & \text{otherwise}
@@ -32,16 +35,100 @@ Where:
 
 * $X$ is a series of log-entries sorted in descending order by their timestamp,
 * $i$ is the index,
-* $x_i$ denotes the individual items in the series $X$
-* $\theta$ is the timeout parameter (i.e. max idle time before we assume a new session)
+* $x_i$ denotes the individual items in the series $X$, and
+* $\theta$ is the timeout parameter (i.e. max idle time before we assume a new session).
 
-## Algorithm
+## Why timeout?
 
-## Implementation from moodle log
+When users interact with Moodle they need to log in or otherwise start a session. While they are actively browsing the site they will create log-entries, however, we cannot guarantee that they log out --in fact our experience tells us that they do not. We therefore need to determine how to deal with the *last click*, and the path of least resistance is to discard this particular observation. Other options include imputing the data-point from the researchers favorite measure of central tendency. 
 
-Let's start by loading the `moodleR` package
+
+## Implementation with moodleR
+
+Let's start by loading the `moodleR` package:
+
+```{r, message=FALSE}
+library(moodleR)
+```
+
+We will also be depending on dplyr verbs so:
+```{r, message=FALSE}
+library(dplyr)
+```
+
+
+### Estimating the timeout parameter
+The `mdl_config()` function will give us access to the site configuration. The 
 
 ```{r}
-library(moodleR)
+my_theta <- mdl_config() %>% 
+  filter(name == "sessiontimeout") %>% 
+  pull(value) 
+my_theta
+```
+
+### Sanity check
+
+Our $\theta$ parameter is returned in seconds, we may want to perform a quick sanity check to see if the value makes sence to us. We can convert this to hours *manually* by applying a simple arithmetic operation. Also note that the value is returned as a *character vector*, which means we need to convert it to a *numeric* or *integer* for use in our later calculations:
+
+```{r}
+my_theta <- as.numeric(my_theta)
+```
+
+Making this conversion also works as a check of the value returned since it will throw an error in case it cannot be interpreted as a number. For convering to hours we simply divide by 60*60:
+```{r}
+my_theta / (60*60)
+```
+
+> Note that parenthesis are needed since R assumes the *PEMDAS* order of operations --which we all learned in highschool and subsequently forgot.
+
+Alternatively we can use the excellent [prettyunits](https://rdrr.io/cran/prettyunits/) package by calling `prettyunits::pretty_sec()`:
+
+```{r}
+prettyunits::pretty_sec(my_theta)
+```
+
+So far this looks reasonable. Now let's get take a look at the  log-data:
+
+```{r}
+my_log <- mdl_log()
+colnames(my_log)
+```
+
+We see that we have a 'timecreated` column and `userid` which can 
+
+### Implementation for one user
+
+```{r, include=FALSE}
+set.seed(1617201903) #For reproducibility
+```
+
+
+First let's get a random user:
+
+```{r}
+my_user_id <- my_log %>% 
+  sample_n(size = 1) %>% 
+  pull(userid)
+```
+
+And implement with dplyr verbs:
+
+```{r}
+dwelltime_estimate <- my_log %>% 
+  filter(userid == my_user_id) %>% 
+  mutate(dwelltime =  timecreated - lag(timecreated)) %>%
+  mutate(dwelltime = ifelse(dwelltime > my_theta, NA, dwelltime)) %>% 
+  summarize(
+    dwelltime = sum(dwelltime, na.rm = TRUE)
+  ) %>%
+  collect()
+  
+dwelltime_estimate
+```
+
+Again, the number we get is in seconds, so perhaps convert to something more readable:
+```{r}
+prettyunits::pretty_sec(dwelltime_estimate$dwelltime)
 ```
 
