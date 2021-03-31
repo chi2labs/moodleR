@@ -14,3 +14,40 @@ articles:
      - calculating-time-on-task
      - simple-predictive-model
 
+reference:
+  - title: "Data Access"
+    desc: >
+      Functions for accessing Moodle data or data in the local cache of Moodle
+      tables.
+  - contents:
+    - mdl_config
+    - mdl_courses
+    - mdl_forum_posts
+    - mdl_grades
+    - mdl_log
+    - mdl_users
+  - title: "Connections and Caching"
+    desc: >
+       Functions for configuring database access, downloading dataand setting
+       up a local cache.
+  - contents:
+    - mdl_get_connection
+    - mdl_get_cache_connection
+    - mdl_create_cache
+  - title: "Summary Functions"
+    desc: >
+       Summary functions with sensible defaults for the domain in question.
+  - contents:
+    - starts_with("summary.")
+  - title: "Plot Functions"
+    desc: >
+       Plot functions with sensible defaults for the domain in question.
+  - contents:
+    - starts_with("plot.")
+  - title: "Print Functions"
+    desc: >
+       Print functions with sensible defaults for the domain in question.
+  - contents:
+    - starts_with("print.")
+
+
