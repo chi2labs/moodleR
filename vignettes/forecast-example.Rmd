@@ -171,7 +171,7 @@ my_plot
 
 And we can see that the prediction is consistent with the observed pattern and generally declining trend. 
 
-THis trend can also be visualized by adding a geom_smooth to the plot.
+This trend can also be visualized by adding a geom_smooth to the plot.
 
 ```{r,  message=FALSE}
 my_plot +
