@@ -170,7 +170,7 @@ dwelltime_estimate %>%
   ggplot(aes(x = Week, y = dwelltime))+
   geom_line() +
   scale_y_continuous(labels = prettyunits::pretty_sec, breaks = c(1800*1:10))+
-  scale_x_continuous(labels = 1:53, breaks = 1:53)
+  scale_x_continuous( breaks = seq(0,53, by=5) )
 ```
 
 
