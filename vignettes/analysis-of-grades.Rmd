@@ -76,6 +76,7 @@ my_grades %>%
   ggplot(aes(normalized_grade)) +
   geom_density(color="red", fill="red", alpha=.4)
 ```
+
 As we could already see from the histgram the distribution is heavily skewed toward the top, presumably because a lot of grades items have a 100% success rate. 
 
 ### Formal Test
@@ -83,7 +84,7 @@ As we could already see from the histgram the distribution is heavily skewed tow
 We can use the `shapiro.test` in R to formally test if we can assume the distribution of these data to be normal. This test has a limitation on $N\leq5000$, so we will need to create a sample, since our dataset is considerably larger. 
 
 ```{r, include=FALSE}
-set.seed(1617219764) #reproducibility
+set.seed(1617219764) #for reproducibility
 ```
 
 
