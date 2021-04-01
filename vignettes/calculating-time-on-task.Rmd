@@ -26,7 +26,7 @@ One way of estimatig dwelltime $\hat{d}$ is:
 $$
 \hat{d}  =    \sum_{i=1}^{|X|} 
 \begin{cases}
-    x_{i-1}-x_i,& \text{if } x_{i-1}-x_i\leq \theta\\
+    x_i-x_{i-1},& \text{if } x_i-x_{i-1}\text{ }\leq \theta\\
     0,              & \text{otherwise}
 \end{cases}
 $$
