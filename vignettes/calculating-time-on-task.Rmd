@@ -11,7 +11,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
 )
 ```
 
@@ -111,7 +113,10 @@ density_plot
 We see a flattening occurring  around 1000. Perhaps we can round this to 1200 (which corresponds to 20 minutes) for good measure:
 ```{r}
 density_plot + 
-  geom_vline(xintercept = 1200, lty=2, color="blue")
+  geom_vline(xintercept = 1200, lty=2, color="blue")+
+      annotate(geom = 'text', x = 300, y = .4, 
+             label = "theta == 1200", 
+             parse = TRUE, color = 'blue',cex=5)
 ```
 
 So,
@@ -169,7 +174,7 @@ dwelltime_estimate %>%
   ) %>% 
   ggplot(aes(x = Week, y = dwelltime))+
   geom_line() +
-  scale_y_continuous(labels = prettyunits::pretty_sec, breaks = c(1800*1:10))+
+  scale_y_continuous(labels = prettyunits::pretty_sec, breaks = c(1800*1:15))+
   scale_x_continuous( breaks = seq(0,53, by=5) )
 ```
 

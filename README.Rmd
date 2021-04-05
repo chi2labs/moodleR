@@ -33,6 +33,11 @@ For more information about the work we do and the products and services we offer
 
 You can install the released version of moodleR from [CRAN](https://CRAN.R-project.org) with:
 
-``` r
+```{r, eval=FALSE}
 install.packages("moodleR")
+```
+
+To install the latest development version:
+```{r, eval=FALSE}
+devtools::install("chi2labs/moodleR")
 ```

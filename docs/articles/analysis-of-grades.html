@@ -145,8 +145,7 @@
 <p>MoodleR comes with a generic plot function for Moodle grades which produces a histogram of normalized grades. The grades are normalized by dividing the <code>rawgrade</code> by <code>rawgrademax</code> in the grades table. This mostly produces a number between 0 and 1 which is conveniently interpretable as a percentage.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_grades</span> <span class="op">%&gt;%</span> 
-  <span class="va">plot</span>
-<span class="co">#&gt; Warning: Removed 2 rows containing missing values (geom_bar).</span></code></pre></div>
+  <span class="va">plot</span></code></pre></div>
 <p><img src="analysis-of-grades_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>In some cases, however, grades are created that are outside of these logical bounds. There may be different reasons for this and consequently different ways of dealing with this sort of anomaly; the easiest of which is, of course, to do as the plot function does: remove the offending observations.</p>
 </div>
@@ -183,7 +182,7 @@
 <span class="co">#&gt;  Shapiro-Wilk normality test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  .</span>
-<span class="co">#&gt; W = 0.61481, p-value &lt; 2.2e-16</span></code></pre></div>
+<span class="co">#&gt; W = 0.60458, p-value &lt; 2.2e-16</span></code></pre></div>
 <p>The <em>Shapiro-Wilk</em> tests the null-hypothesis of a sample from a normal distribution. As we can easily see this hypothesis is rejected.</p>
 </div>
 </div>
