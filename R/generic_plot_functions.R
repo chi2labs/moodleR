@@ -11,7 +11,6 @@
 #' @import ggwordcloud
 #' @import tidytext
 #' @import dplyr
-#' @import magrittr
 #' @import ggplot2
 #' @importFrom utils head
 #' @export
@@ -45,6 +44,7 @@ plot.mdl_log <- function() {
 #'
 #' @import dplyr
 #' @import ggplot2
+#' @importFrom graphics hist
 #' @return A ggplot or base  graphic plot
 #' @export
 plot.mdl_grades <- function(x, use_base_graphics = FALSE, ...) {

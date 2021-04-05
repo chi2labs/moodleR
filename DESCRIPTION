@@ -23,7 +23,9 @@ Encoding: UTF-8
 LazyData: true
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    prettyunits,
+    lubridate
 VignetteBuilder: knitr
 Imports: 
     lifecycle,
@@ -41,6 +43,7 @@ Imports:
     RMariaDB,
     glue,
     config,
-    anytime
+    anytime,
+    here
 RdMacros: lifecycle
 RoxygenNote: 7.1.1
