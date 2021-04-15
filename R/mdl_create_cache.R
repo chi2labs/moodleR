@@ -4,10 +4,8 @@
 #'
 #' @param con a database connection (to a moodle database)
 #' @param format output format (mysql, csv)
-#' @param tables which tables should be included
 #' @param output_dir where does the cache go
 #' @param output_filename filename (in the case of sqlite output), or prefilx (in_case of CSV download)
-#' @param views should stardard views be created
 #' @param tbl_prefix Moodle DB table prefix
 #' @import config
 #' @import rlang
@@ -16,8 +14,6 @@
 #' @export
 mdl_create_cache <- function(con = mdl_get_connection(use_cache = FALSE),
                              format=c("sqlite"),
-                             views = TRUE,
-                             tables = c("base"),
                              tbl_prefix = "mdl_",
                              output_dir = mdl_get_cache_dir(),
                              output_filename = mdl_get_cache_filename()

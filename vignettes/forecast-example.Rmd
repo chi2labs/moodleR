@@ -69,7 +69,7 @@ my_log %>%
 
 ## Visualizations
 
-We can now vizualize the data.
+We can now visualize the data.
 
 ```{r}
 my_timeseries %>% 

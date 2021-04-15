@@ -33,7 +33,7 @@ mdl_get_connection <- function(
 
 #' Connection to Cached Moodle Data
 #'
-#' @param access Specifies RO or RWC accesss
+#' @param access Specifies RO or RWC access
 #'
 #' @importFrom RSQLite SQLite
 #' @importFrom DBI dbConnect

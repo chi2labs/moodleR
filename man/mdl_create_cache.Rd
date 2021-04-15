@@ -7,8 +7,6 @@
 mdl_create_cache(
   con = mdl_get_connection(use_cache = FALSE),
   format = c("sqlite"),
-  views = TRUE,
-  tables = c("base"),
   tbl_prefix = "mdl_",
   output_dir = mdl_get_cache_dir(),
   output_filename = mdl_get_cache_filename()
@@ -18,10 +16,6 @@ mdl_create_cache(
 \item{con}{a database connection (to a moodle database)}
 
 \item{format}{output format (mysql, csv)}
-
-\item{views}{should stardard views be created}
-
-\item{tables}{which tables should be included}
 
 \item{tbl_prefix}{Moodle DB table prefix}
 

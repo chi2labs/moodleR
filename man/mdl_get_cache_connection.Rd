@@ -7,7 +7,7 @@
 mdl_get_cache_connection(access = c("RO", "RWC"))
 }
 \arguments{
-\item{access}{Specifies RO or RWC accesss}
+\item{access}{Specifies RO or RWC access}
 }
 \value{
 a DBI connection object

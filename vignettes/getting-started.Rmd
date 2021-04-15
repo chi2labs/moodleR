@@ -50,7 +50,7 @@ The R generic `summary` function is implemented with sensible defaults so that:
 summary(my_grades)
 ```
 
-provides useful information for the learning analytics preactitioner.
+provides useful information for the learning analytics practitioner.
 
 ## Plot functions
 

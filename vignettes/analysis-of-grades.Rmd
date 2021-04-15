@@ -79,7 +79,7 @@ my_grades %>%
   geom_density(color="red", fill="red", alpha=.4)
 ```
 
-As we could already see from the histgram the distribution is heavily skewed toward the top, presumably because a lot of grades items have a 100% success rate. 
+As we could already see from the histogram the distribution is heavily skewed toward the top, presumably because a lot of grades items have a 100% success rate. 
 
 ### Formal Test
 
