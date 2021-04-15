@@ -45,6 +45,7 @@ Imports:
     config,
     anytime,
     here,
-    cli
+    cli,
+    RSQLite
 RdMacros: lifecycle
 RoxygenNote: 7.1.1
