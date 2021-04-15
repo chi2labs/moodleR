@@ -4,7 +4,7 @@
 #' @return invisible(NULL)
 #' @export
 check_mdl_cache <- function(){
-  my_filename <- paste0(mdl_get_cache_dir(),"/",mdl_get_cache_filename())
+  my_filename <- file.path(mdl_get_cache_dir(), mdl_get_cache_filename())
   if(!file.exists(my_filename)){
     cli::cli_alert_danger("Cached data not found or not readable: {test_conn@dbname}")
   }

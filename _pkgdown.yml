@@ -49,5 +49,14 @@ reference:
        Print functions with sensible defaults for the domain in question.
   - contents:
     - starts_with("print.")
-
-
+  - title: "Check Function"
+    desc: >
+       Checks if cache has been created correctly.
+  - contents:
+    - starts_with("check_")
+  - title: "Cache Paths"
+    desc: >
+       Gets the cache directory and filename.
+  - contents:
+    - mdl_get_cache_dir
+    - mdl_get_cache_filename

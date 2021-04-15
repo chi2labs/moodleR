@@ -23,7 +23,7 @@ The learning analytics practitioner will often find it useful to have at their d
 
 ## Definition
 
-One way of estimatig dwelltime $\hat{d}$ is: 
+One way of estimating dwelltime $\hat{d}$ is: 
 
 $$
 \hat{d}  =    \sum_{i=1}^{|X|} 
@@ -78,9 +78,12 @@ First let's get a random user:
 
 ```{r}
 my_user_id <- mdl_log() %>% 
-  head(100000) %>% 
+  head(100000L) %>% 
   slice_sample(n = 1) %>% 
   pull(userid)
+```
+```{r, include=FALSE}
+my_user_id <- 37767
 ```
 
 And implement with dplyr verbs:

@@ -49,7 +49,7 @@ mdl_get_cache_connection <- function(access = c("RO","RWC")) {
   )
 
   con <- DBI::dbConnect(RSQLite::SQLite(),
-                        dbname = paste0(mdl_get_cache_dir(), "/", mdl_get_cache_filename()),
+                        dbname = file.path(mdl_get_cache_dir(), mdl_get_cache_filename()),
                         flags = flags
   )
   # TODO: Add checks etc. here

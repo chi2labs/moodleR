@@ -12,7 +12,8 @@ mdl_get_cache_dir <- function(){
       dir.create(ret)
       rlang::inform(glue::glue("Directory created: {ret}"))
     }
-    rlang::inform(message = paste0("Directory '{ret}' used by default. Set config variable in moodleR:mdl_cache_dir to override."),
+    rlang::inform(message =
+                    glue::glue("Directory '{ret}' used by default. Set config variable in moodleR:mdl_cache_dir to override.") ,
                   .frequency = "once",
                   .frequency_id = "mdl_get_cache_dir"
     )
@@ -24,6 +25,7 @@ mdl_get_cache_dir <- function(){
 #' Get the Cache Filename
 #'
 #' @import rlang
+#' @importFrom glue glue
 #' @return Character vector with path
 #' @export
 mdl_get_cache_filename <- function() {
@@ -31,7 +33,8 @@ mdl_get_cache_filename <- function() {
   if (is.null(ret)) {
     ret <- "mdl_cache.sqlite"
     rlang::inform(
-      message = paste0("Filename '", ret, "' used by default. Set config variable in moodleR:mdl_cache_dir to override."),
+      message =
+        glue::glue("Filename '{ret}' used by default. Set config variable in moodleR:mdl_cache_dir to override."),
       .frequency = "once",
       .frequency_id = "mdl_get_cache_filename"
     )

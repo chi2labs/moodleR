@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Forum Posts — mdl_forum_posts • moodleR</title>
+<title>Check Cached Data — check_mdl_cache • moodleR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Get Forum Posts — mdl_forum_posts" />
-<meta property="og:description" content="Returns a reference to the (cached) forum_posts table, with the most relevant columns selected." />
+<meta property="og:title" content="Check Cached Data — check_mdl_cache" />
+<meta property="og:description" content="Checks that the cached data is available." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -147,32 +147,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Forum Posts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chi2labs/moodleR/blob/master/R/mdl_forum_posts.R'><code>R/mdl_forum_posts.R</code></a></small>
-    <div class="hidden name"><code>mdl_forum_posts.Rd</code></div>
+    <h1>Check Cached Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chi2labs/moodleR/blob/master/R/check_mdl_cache.R'><code>R/check_mdl_cache.R</code></a></small>
+    <div class="hidden name"><code>check_mdl_cache.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns a reference to the (cached) forum_posts table, with the most relevant columns selected.</p>
+    <p>Checks that the cached data is available.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mdl_forum_posts</span><span class='op'>(</span>con <span class='op'>=</span> <span class='fu'><a href='mdl_get_connection.html'>mdl_get_connection</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>check_mdl_cache</span><span class='op'>(</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>con</th>
-      <td><p>a database connection object</p></td>
-    </tr>
-    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dbplyr reference object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>For convenience two additional columns: forum_name and thread_name; are added.</p>
+    <p>invisible(NULL)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
