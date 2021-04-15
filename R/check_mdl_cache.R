@@ -3,10 +3,15 @@
 #' Checks that the cached data is available.
 #' @return invisible(NULL)
 #' @export
+#' @examples
+#'\dontrun{
+#' check_mdl_cache()
+#' }
 check_mdl_cache <- function(){
   my_filename <- file.path(mdl_get_cache_dir(), mdl_get_cache_filename())
   if(!file.exists(my_filename)){
-    cli::cli_alert_danger("Cached data not found or not readable: {test_conn@dbname}")
+    cli::cli_alert_danger("Cached data not found or not readable: {my_filename}")
+    return(invisible(NULL))
   }
 
   suppressMessages(

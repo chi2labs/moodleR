@@ -12,3 +12,8 @@ invisible(NULL)
 \description{
 Checks that the cached data is available.
 }
+\examples{
+\dontrun{
+check_mdl_cache()
+}
+}

@@ -15,3 +15,15 @@ A dbplyr reference object
 \description{
 Returns a reference to the (cached) grades table, with the most relevant columns selected.
 }
+\examples{
+\dontrun{
+# Get the course grades for courseid 52
+course_grades <- mdl_grades() \%>\%
+filter(courseid == 52, item_type == "course") \%>\%
+collect()
+# Get the other grades items:
+grades_items_grades <- mdl_grades() \%>\%
+filter(courseid == 52, item_type != "course") \%>\%
+collect()
+}
+}
