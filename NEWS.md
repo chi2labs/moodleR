@@ -1,8 +1,11 @@
-# moodleR 0.4.0
+# moodleR 0.3.1
+
+* Added tests
+* Added examples
 
 # moodleR 0.3.0
 
-* First CRAN release
+* First attempt at CRAN release
 
 # moodleR 0.2.0
 

@@ -1,7 +1,7 @@
 Package: moodleR
 Type: Package
 Title: Helper Functions to Work with Moodle Data
-Version: 0.4.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Aleksander",
              family = "Dietrichson",
