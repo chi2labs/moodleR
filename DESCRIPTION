@@ -39,7 +39,6 @@ Imports:
     stringr,
     rlang,
     scales,
-    RMySQL,
     RMariaDB,
     glue,
     config,
