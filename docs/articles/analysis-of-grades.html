@@ -168,7 +168,7 @@
     <span class="va">normalized_grade</span> <span class="op">&gt;=</span><span class="fl">0</span>,
     <span class="va">normalized_grade</span> <span class="op">&lt;=</span><span class="fl">1</span>
          <span class="op">)</span></code></pre></div>
-<p>Now we can create a dentity plot.</p>
+<p>Now we can create a density plot.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_grades</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">normalized_grade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -189,7 +189,7 @@
 <span class="co">#&gt;  Shapiro-Wilk normality test</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; data:  .</span>
-<span class="co">#&gt; W = 0.6085, p-value &lt; 2.2e-16</span></code></pre></div>
+<span class="co">#&gt; W = 0.6076, p-value &lt; 2.2e-16</span></code></pre></div>
 <p>The <em>Shapiro-Wilk</em> tests the null-hypothesis of a sample from a normal distribution. As we can easily see this hypothesis is rejected.</p>
 </div>
 </div>

@@ -78,12 +78,12 @@ First let's get a random user:
 
 ```{r}
 my_user_id <- mdl_log() %>% 
-  head(100000L) %>% 
+  head(1000L) %>% 
   slice_sample(n = 1) %>% 
   pull(userid)
 ```
 ```{r, include=FALSE}
-my_user_id <- 37767
+my_user_id <- 3201 #override since set.seed is not returning same value...
 ```
 
 And implement with dplyr verbs:
@@ -99,7 +99,7 @@ mean(dwelltime_estimate %>% pull("dwelltime"), na.rm = TRUE)
 
 ### Estimating timeout visually
 
-Thus far we have implemented the algorithm without a $\theta$. This will very likely yield distorded values because it includes differences that span several sessions and time intervals which can be years. Let's take a look at the distribution to ascertain a reasonable value for our $theta$. For this we will use the ggplot2 package.
+Thus far we have implemented the algorithm without a $\theta$. This will very likely yield distorted values because it includes differences that span several sessions and time intervals which can be years. Let's take a look at the distribution to ascertain a reasonable value for our $theta$. For this we will use the ggplot2 package.
 
 
 ```{r}

@@ -71,7 +71,7 @@ my_grades <- my_grades %>%
          )
 ```
 
-Now we can create a dentity plot.
+Now we can create a density plot.
 
 ```{r}
 my_grades %>% 
