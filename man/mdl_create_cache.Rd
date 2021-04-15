@@ -21,7 +21,7 @@ mdl_create_cache(
 
 \item{output_dir}{where does the cache go}
 
-\item{output_filename}{filename (in the case of sqlite output), or prefilx (in_case of CSV download)}
+\item{output_filename}{filename (in the case of sqlite output), or prefix (in_case of CSV download)}
 }
 \description{
 Create local cache from a  Moodle Database

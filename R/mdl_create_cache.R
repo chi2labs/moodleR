@@ -5,7 +5,7 @@
 #' @param con a database connection (to a moodle database)
 #' @param format output format (mysql, csv)
 #' @param output_dir where does the cache go
-#' @param output_filename filename (in the case of sqlite output), or prefilx (in_case of CSV download)
+#' @param output_filename filename (in the case of sqlite output), or prefix (in_case of CSV download)
 #' @param tbl_prefix Moodle DB table prefix
 #' @import config
 #' @import rlang
