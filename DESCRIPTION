@@ -1,7 +1,7 @@
 Package: moodleR
 Type: Package
 Title: Helper Functions to Work with Moodle Data
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Aleksander",
              family = "Dietrichson",
@@ -27,11 +27,10 @@ Suggests:
     rmarkdown,
     prettyunits,
     lubridate,
+    lifecycle,
     testthat
 Imports: 
-    lifecycle,
     DBI,
-    RSQLite,
     dplyr,
     ggplot2,
     tidytext,

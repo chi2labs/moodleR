@@ -1,3 +1,5 @@
+# moodleR 0.4.0
+
 # moodleR 0.3.0
 
 * First CRAN release
