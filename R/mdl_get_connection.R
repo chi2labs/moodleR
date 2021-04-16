@@ -19,7 +19,10 @@ mdl_get_connection <- function(
     )
   }
   # mySQL connection
-  myConf <- config::get(config = config)
+  myConf <- tryCatch(config::get(config = config),
+                     error = function(e){NULL}
+                     )
+  if(is.null(myConf))stop("Configuration could not be loaded.")
   DBI::dbConnect(
     RMariaDB::MariaDB(),
     user = myConf$moodleR$user,

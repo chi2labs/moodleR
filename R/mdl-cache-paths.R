@@ -5,7 +5,10 @@
 #' @return Character vector with path
 #' @export
 mdl_get_cache_dir <- function(){
-  ret <- config::get("moodleR")$cache_dir
+  ret <- tryCatch(
+    config::get("moodleR")$cache_dir,
+    error = function(e){NULL}
+  )
   if (is.null(ret)) {
     ret <- here::here("mdl_cache")
     if (!file.exists(ret)) {
@@ -29,7 +32,10 @@ mdl_get_cache_dir <- function(){
 #' @return Character vector with path
 #' @export
 mdl_get_cache_filename <- function() {
-  ret <- config::get("moodleR")$cache_filename
+  ret <- tryCatch(
+    config::get("moodleR")$cache_filename,
+    error = function(e){NULL}
+  )
   if (is.null(ret)) {
     ret <- "mdl_cache.sqlite"
     rlang::inform(
