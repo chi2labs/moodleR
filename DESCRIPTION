@@ -17,7 +17,7 @@ Authors@R:
              role = "ctb"))
 Maintainer: Aleksander Dietrichson <dietrichson@gmail.com>
 Description: A collection of functions to connect to a Moodle database, cache relevant tables locally and generate learning analytics. 
-    Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit https://moodle.org.
+    Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
 License: MIT + file LICENSE
 URL: https://github.com/chi2labs/moodleR,
     https://chi2labs.github.io/moodleR/
@@ -28,7 +28,6 @@ Suggests:
     rmarkdown,
     prettyunits,
     lubridate,
-    lifecycle,
     testthat
 Imports: 
     DBI,
@@ -46,6 +45,8 @@ Imports:
     anytime,
     here,
     cli,
+    lifecycle,
     RSQLite
 RdMacros: lifecycle
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
