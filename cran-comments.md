@@ -6,8 +6,8 @@
 
 ## R CMD check results
 
-0 errors | 1 warning | 0 note
+0 errors | 0 warnings | 0 notes
 
 * This is a new release.
-* 1 warning related to qpdf ("‘qpdf’ is needed...") - should be ignored, does not occur on win-builder
+
 * Possible spelling errors have been double checked and are OK.
