@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The moodleR package contains functions and algorithms to access Moodle$^{TM}$ data and perform reporting and/or learning analytics based in these data. For more information about Moodle go to [www.moodle.org](http://www.moodle.org). For more information about $\chi^\color{red}2$ (chi square) Laboratories and the work we do in learning analytics, visit our website: [www.chi2labs.com](http://www.chi2labs.com).
+The moodleR package contains functions and algorithms to access Moodle$^{TM}$ data and perform reporting and/or learning analytics based in these data. For more information about Moodle go to [www.moodle.org](https://www.moodle.org:443/). For more information about $\chi^\color{red}2$ (chi square) Laboratories and the work we do in learning analytics, visit our website: [www.chi2labs.com](https://www.chi2labs.com).
 
 ## Installing and loading the package
 

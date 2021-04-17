@@ -6,17 +6,15 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/moodleR)](https://CRAN.R-project.org/package=moodleR)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of moodleR is to facilitate access to and manipulating of
 Moodle™ data for learning analytics practitioners. Moodle is a widely
 used open source learning management system (LMS). For more information
-about Moodle go to [www.moodle.org](http://www.moodle.org).
+about Moodle go to [www.moodle.org](https://moodle.org/).
 
 ## Credits
 
