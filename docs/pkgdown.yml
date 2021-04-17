@@ -2,11 +2,11 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  analysis-of-grades: analysis-of-grades.html
-  calculating-time-on-task: calculating-time-on-task.html
-  forecast-example: forecast-example.html
-  getting-started: getting-started.html
+  articles/analysis-of-grades: analysis-of-grades.html
+  articles/calculating-time-on-task: calculating-time-on-task.html
+  articles/forecast-example: forecast-example.html
+  articles/getting-started: getting-started.html
+  articles/simple-predictive-model: simple-predictive-model.html
   setup: setup.html
-  simple-predictive-model: simple-predictive-model.html
-last_built: 2021-04-15T19:17Z
+last_built: 2021-04-17T11:35Z
 

@@ -6,13 +6,13 @@ articles:
    navbar: "Getting Started"
    contents:
     - setup
-    - getting-started
+    - articles/getting-started
  - title: "Examples & Recipes"
    navbar: "Examples & Recipes"
    contents:
-     - calculating-time-on-task
-     - analysis-of-grades
-     - forecast-example
+     - articles/calculating-time-on-task
+     - articles/analysis-of-grades
+     - articles/forecast-example
 
 reference:
   - title: "Data Access"

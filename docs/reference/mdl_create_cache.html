@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">moodleR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -108,18 +108,18 @@
       <a href="../articles/setup.html">Basic Setup</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting Started with moodleR</a>
+      <a href="../articles/articles/getting-started.html">Getting Started with moodleR</a>
     </li>
     <li class="divider"></li>
     <li class="dropdown-header">Examples &amp; Recipes</li>
     <li>
-      <a href="../articles/calculating-time-on-task.html">Estimating Time on Task</a>
+      <a href="../articles/articles/calculating-time-on-task.html">Estimating Time on Task</a>
     </li>
     <li>
-      <a href="../articles/analysis-of-grades.html">Analysis of Grades</a>
+      <a href="../articles/articles/analysis-of-grades.html">Analysis of Grades</a>
     </li>
     <li>
-      <a href="../articles/forecast-example.html">Forecasting with moodleR</a>
+      <a href="../articles/articles/forecast-example.html">Forecasting with moodleR</a>
     </li>
   </ul>
 </li>
@@ -159,8 +159,6 @@
     <pre class="usage"><span class='fu'>mdl_create_cache</span><span class='op'>(</span>
   con <span class='op'>=</span> <span class='fu'><a href='mdl_get_connection.html'>mdl_get_connection</a></span><span class='op'>(</span>use_cache <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>,
   format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sqlite"</span><span class='op'>)</span>,
-  views <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  tables <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"base"</span><span class='op'>)</span>,
   tbl_prefix <span class='op'>=</span> <span class='st'>"mdl_"</span>,
   output_dir <span class='op'>=</span> <span class='fu'><a href='mdl_get_cache_dir.html'>mdl_get_cache_dir</a></span><span class='op'>(</span><span class='op'>)</span>,
   output_filename <span class='op'>=</span> <span class='fu'><a href='mdl_get_cache_filename.html'>mdl_get_cache_filename</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -178,14 +176,6 @@
       <td><p>output format (mysql, csv)</p></td>
     </tr>
     <tr>
-      <th>views</th>
-      <td><p>should stardard views be created</p></td>
-    </tr>
-    <tr>
-      <th>tables</th>
-      <td><p>which tables should be included</p></td>
-    </tr>
-    <tr>
       <th>tbl_prefix</th>
       <td><p>Moodle DB table prefix</p></td>
     </tr>
@@ -195,7 +185,7 @@
     </tr>
     <tr>
       <th>output_filename</th>
-      <td><p>filename (in the case of sqlite output), or prefilx (in_case of CSV download)</p></td>
+      <td><p>filename (in the case of sqlite output), or prefix (in_case of CSV download)</p></td>
     </tr>
     </table>
 
