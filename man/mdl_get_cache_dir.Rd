@@ -10,5 +10,6 @@ mdl_get_cache_dir()
 Character vector with path
 }
 \description{
-Get the Cache Directory
+The cache directory can be set in the config-file (moodleR:->cache_dir:), which is recommended.
+If it is not present, or no config is found, a tempdir() will be returned.
 }

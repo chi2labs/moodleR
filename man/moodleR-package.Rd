@@ -4,12 +4,12 @@
 \name{moodleR-package}
 \alias{moodleR}
 \alias{moodleR-package}
-\title{moodleR: Helper Functions to Work with Moodle Data}
+\title{moodleR: Helper Functions to Work with 'Moodle' Data}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-A collection of functions to connect to a Moodle database, cache relevant tables locally and generate learning analytics. 
-    Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
+A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 
+    'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
 }
 \seealso{
 Useful links:

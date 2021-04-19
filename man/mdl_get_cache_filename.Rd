@@ -10,5 +10,5 @@ mdl_get_cache_filename()
 Character vector with path
 }
 \description{
-Get the Cache Filename
+The cache filename ("mdl_cache.sqlite" by default), can be set in the config-file((moodleR:->cache_dir:).
 }

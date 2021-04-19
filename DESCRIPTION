@@ -1,6 +1,6 @@
 Package: moodleR
 Type: Package
-Title: Helper Functions to Work with Moodle Data
+Title: Helper Functions to Work with 'Moodle' Data
 Version: 0.3.2
 Authors@R: 
     c(person(given = "Aleksander",
@@ -16,8 +16,8 @@ Authors@R:
              family = "Pagnone",
              role = "ctb"))
 Maintainer: Aleksander Dietrichson <dietrichson@gmail.com>
-Description: A collection of functions to connect to a Moodle database, cache relevant tables locally and generate learning analytics. 
-    Moodle is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
+Description: A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 
+    'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
 License: MIT + file LICENSE
 URL: https://github.com/chi2labs/moodleR,
     https://chi2labs.github.io/moodleR/

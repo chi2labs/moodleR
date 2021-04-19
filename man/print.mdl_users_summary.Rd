@@ -11,6 +11,9 @@
 
 \item{...}{further arguments passed to or from other methods.}
 }
+\value{
+invisible(x). Typically called for its side effect which is a pretty-print of the relevant information.
+}
 \description{
-Overrides generic print function
+Overrides generic print function to pretty-print a summary of the users.
 }

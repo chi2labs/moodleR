@@ -1,12 +1,13 @@
 #' Creates a Local Cache
 #'
-#' Create local cache from a  Moodle Database
+#' Create local cache from a  Moodle Database.
 #'
 #' @param con a database connection (to a moodle database)
 #' @param format output format (mysql, csv)
 #' @param output_dir where does the cache go
 #' @param output_filename filename (in the case of sqlite output), or prefix (in_case of CSV download)
 #' @param tbl_prefix Moodle DB table prefix
+#' @return invisible(NULL)
 #' @import config
 #' @import rlang
 #' @importFrom glue glue
@@ -122,4 +123,5 @@ mdl_create_cache <- function(con = mdl_get_connection(use_cache = FALSE),
   # Clean up ####
   DBI::dbDisconnect(sqlite_connection)
   DBI::dbDisconnect(moodle_connection)
+  invisible(NULL)
 }
