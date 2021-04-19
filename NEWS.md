@@ -1,3 +1,5 @@
+# moodleR 0.3.2
+
 # moodleR 0.3.1
 
 * Added tests
