@@ -1,5 +1,8 @@
 # moodleR 0.3.2
 
+* Added more unit tests.
+* Updated default path in case of no config available.
+
 # moodleR 0.3.1
 
 * Added tests
