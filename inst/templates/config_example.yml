@@ -1,0 +1,15 @@
+# Example configuration file for moodleR.
+# If you already have a config.yml file cut and paste the "moodleR" section below,
+# and update the respective fields.
+# Alternatively use "save as" to save this file as config.yml
+# It is recommended that you check the config with config::get()
+default:
+   moodleR:
+    user: "root"
+    password: "root"
+    dbname: "my_moodle"
+    host: "localhost"
+    port: 3306
+    cache_dir: "./mdl_cache"
+    cache_filename: "mdl_cache.sqlite"
+

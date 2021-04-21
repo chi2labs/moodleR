@@ -60,3 +60,8 @@ reference:
   - contents:
     - mdl_get_cache_dir
     - mdl_get_cache_filename
+  - title: "Config Template"
+    desc: >
+       Creates an example config.yml file and opens it for editing.
+  - contents:
+    - example_config_yml
