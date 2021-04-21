@@ -46,7 +46,8 @@ Imports:
     here,
     cli,
     lifecycle,
-    RSQLite
+    RSQLite,
+    usethis
 RdMacros: lifecycle
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
