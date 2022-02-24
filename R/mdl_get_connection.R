@@ -23,7 +23,9 @@ mdl_get_connection <- function(
                      error = function(e){NULL}
                      )
   if(is.null(myConf))stop("Configuration could not be loaded.")
-  if(identical(my_conf$moodleR$db_driver,"postgres")){
+  if(identical(myConf$moodleR$db_driver,"postgres")){
+    db_port <- myConf$moodleR$port
+    if(is.null(db_port)) db_port <- 5432
     my_connection <-
       DBI::dbConnect(
         RPostgres::Postgres(),
@@ -31,6 +33,7 @@ mdl_get_connection <- function(
         password = myConf$moodleR$password,
         dbname = myConf$moodleR$dbname,
         host = myConf$moodleR$host,
+        port = db_port,
         bigint = "integer64"
       )
     return(my_connection)
