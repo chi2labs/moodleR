@@ -21,7 +21,7 @@ mdl_get_connection <- function(
   # mySQL connection
   myConf <- tryCatch(config::get(config = config),
                      error = function(e){NULL}
-                     )
+  )
   if(is.null(myConf))stop("Configuration could not be loaded.")
   if(identical(myConf$moodleR$db_driver,"postgres")){
     db_port <- myConf$moodleR$port
@@ -36,16 +36,20 @@ mdl_get_connection <- function(
         port = db_port,
         bigint = "integer64"
       )
-    return(my_connection)
+
   }
-  DBI::dbConnect(
-    RMariaDB::MariaDB(),
-    user = myConf$moodleR$user,
-    password = myConf$moodleR$password,
-    dbname = myConf$moodleR$dbname,
-    host = myConf$moodleR$host,
-    bigint = "integer64"
-  )
+
+  my_connection <-
+    DBI::dbConnect(
+      RMariaDB::MariaDB(),
+      user = myConf$moodleR$user,
+      password = myConf$moodleR$password,
+      dbname = myConf$moodleR$dbname,
+      host = myConf$moodleR$host,
+      bigint = "integer64"
+    )
+  attr(my_connection,"use_cache") <- FALSE
+  my_connection
 }
 
 
