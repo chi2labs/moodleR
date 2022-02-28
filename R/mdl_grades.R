@@ -19,9 +19,20 @@
 #' collect()
 #' }
 mdl_grades <- function(
-  con = mdl_get_connection()
+  con = mdl_get_connection(),
+  tbl_prefix = "mdl_"
 ) {
-  ret <- tbl(con, "grades")
+
+  if(!attr(con, "use_cache")){ #direct connection
+    ret <-
+      DBI::dbGetQuery(con,
+                      mdl_grades_query(tbl_prefix))
+  } else {
+    ret <- tbl(con, "grades")
+  }
+
+
+
   class(ret) <- c(class(ret), "mdl_grades")
   ret
 }
