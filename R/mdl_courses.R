@@ -16,7 +16,7 @@ mdl_courses <- function(
   tbl_prefix = "mdl_"
 ) {
 
-  if(!attr(my_con,"use_cache")){ #direct connection
+  if(!attr(con, "use_cache")){ #direct connection
     my_courses <-
       tbl(con, glue("{tbl_prefix}course")) %>%
       mutate(courseid = id) %>%
