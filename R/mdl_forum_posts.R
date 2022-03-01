@@ -16,9 +16,10 @@ mdl_forum_posts <- function(
   tbl_prefix = "mdl_"
 ) {
   if(!attr(con, "use_cache")){ #direct connection
-     ret <-
-       DBI::dbGetQuery(con,
-                       mdl_posts_query(tbl_prefix))
+
+    ret <-
+      tbl(con, sql(mdl_posts_query( tbl_prefix )))
+
   } else{
     ret <- tbl(con, "posts")
 

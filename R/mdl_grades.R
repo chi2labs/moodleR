@@ -24,9 +24,13 @@ mdl_grades <- function(
 ) {
 
   if(!attr(con, "use_cache")){ #direct connection
+    # ret <-
+    #   DBI::dbGetQuery(con,
+    #                   mdl_grades_query(tbl_prefix))
     ret <-
-      DBI::dbGetQuery(con,
-                      mdl_grades_query(tbl_prefix))
+      tbl(con,sql(mdl_grades_query(tbl_prefix)))
+
+
   } else {
     ret <- tbl(con, "grades")
   }
