@@ -4,10 +4,12 @@
 \alias{mdl_users}
 \title{Get Moodle Users}
 \usage{
-mdl_users(con = mdl_get_connection())
+mdl_users(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
-\item{con}{a database connection object}
+\item{con}{database connection object}
+
+\item{tbl_prefix}{table prefix}
 }
 \value{
 A dbplyr reference object

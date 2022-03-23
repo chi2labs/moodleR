@@ -7,3 +7,6 @@ kladd
 moodleR.Rproj
 mdl_cache
 /config.yml
+moodleR.Rcheck/
+moodleR*.tar.gz
+moodleR*.tgz

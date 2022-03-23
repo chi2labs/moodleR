@@ -4,10 +4,12 @@
 \alias{mdl_courses}
 \title{Get Courses}
 \usage{
-mdl_courses(con = mdl_get_connection())
+mdl_courses(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
 \item{con}{a database connection object}
+
+\item{tbl_prefix}{prefix for tables}
 }
 \value{
 A dbplyr reference object.

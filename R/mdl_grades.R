@@ -2,7 +2,7 @@
 #'
 #' Returns a reference to the (cached) grades table, with the most relevant columns selected.
 #'
-#' @param con a database connection object
+#' @inheritParams mdl_config
 #' @importFrom dplyr tbl
 #' @importFrom dplyr select
 #' @return A dbplyr reference object

@@ -4,10 +4,12 @@
 \alias{mdl_grades}
 \title{Get Grades}
 \usage{
-mdl_grades(con = mdl_get_connection())
+mdl_grades(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
-\item{con}{a database connection object}
+\item{con}{database connection object}
+
+\item{tbl_prefix}{table prefix}
 }
 \value{
 A dbplyr reference object
