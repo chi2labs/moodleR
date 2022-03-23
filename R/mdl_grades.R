@@ -2,7 +2,7 @@
 #'
 #' Returns a reference to the (cached) grades table, with the most relevant columns selected.
 #'
-#' @param con a database connection object
+#' @inheritParams mdl_config
 #' @importFrom dplyr tbl
 #' @importFrom dplyr select
 #' @return A dbplyr reference object
@@ -19,9 +19,24 @@
 #' collect()
 #' }
 mdl_grades <- function(
-  con = mdl_get_connection()
+  con = mdl_get_connection(),
+  tbl_prefix = "mdl_"
 ) {
-  ret <- tbl(con, "grades")
+
+  if(!attr(con, "use_cache")){ #direct connection
+    # ret <-
+    #   DBI::dbGetQuery(con,
+    #                   mdl_grades_query(tbl_prefix))
+    ret <-
+      tbl(con,sql(mdl_grades_query(tbl_prefix)))
+
+
+  } else {
+    ret <- tbl(con, "grades")
+  }
+
+
+
   class(ret) <- c(class(ret), "mdl_grades")
   ret
 }

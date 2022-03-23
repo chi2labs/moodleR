@@ -4,10 +4,12 @@
 \alias{mdl_config}
 \title{Moodle Configuration Table}
 \usage{
-mdl_config(con = mdl_get_connection())
+mdl_config(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
 \item{con}{database connection object}
+
+\item{tbl_prefix}{table prefix}
 }
 \value{
 A tibble

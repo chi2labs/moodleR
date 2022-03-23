@@ -4,10 +4,12 @@
 \alias{mdl_forum_posts}
 \title{Get Forum Posts}
 \usage{
-mdl_forum_posts(con = mdl_get_connection())
+mdl_forum_posts(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
 \item{con}{a database connection object}
+
+\item{tbl_prefix}{table prefix}
 }
 \value{
 A dbplyr reference object.

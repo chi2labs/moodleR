@@ -2,15 +2,23 @@
 #'
 #' Returns a reference to the (cached) users table, with the most relevant columns selected.
 #'
-#' @param con a database connection object
+#' @inheritParams mdl_config
 #' @importFrom dplyr tbl
 #' @importFrom dplyr select
 #' @return A dbplyr reference object
 #' @export
 mdl_users <- function(
-  con = mdl_get_connection()
+  con = mdl_get_connection(),
+  tbl_prefix = "mdl_"
 ) {
-  ret <- tbl(con, "user")
+  if(!attr(con, "use_cache")){ #direct connection
+  ret <- tbl(con, glue("{tbl_prefix}user")) %>%
+    mutate(userid = id) %>%
+      collect()
+  } else {
+    ret <- tbl(con, "user")
+  }
+
   class(ret) <- c(class(ret), "mdl_users")
   ret
 }

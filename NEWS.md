@@ -1,4 +1,4 @@
-# moodleR (development version)
+# moodleR 1.0.0
 
 # moodleR 0.3.2
 

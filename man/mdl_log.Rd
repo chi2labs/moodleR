@@ -4,10 +4,12 @@
 \alias{mdl_log}
 \title{Access Moodle's Logs}
 \usage{
-mdl_log(con = mdl_get_connection())
+mdl_log(con = mdl_get_connection(), tbl_prefix = "mdl_")
 }
 \arguments{
 \item{con}{A database connection object}
+
+\item{tbl_prefix}{table prefix}
 }
 \value{
 A dbplyr reference object.
