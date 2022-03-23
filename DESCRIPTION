@@ -1,7 +1,7 @@
 Package: moodleR
 Type: Package
 Title: Helper Functions to Work with 'Moodle' Data
-Version: 0.3.2.9000
+Version: 1.0.0
 Authors@R: 
     c(person(given = "Aleksander",
              family = "Dietrichson",
@@ -14,7 +14,11 @@ Authors@R:
              role = "ctb"),
       person(given = "Pablo",
              family = "Pagnone",
-             role = "ctb"))
+             role = "ctb"),
+      person(given = "Alex",
+             family = "Ondrus",
+             role = "ctb")
+             )
 Maintainer: Aleksander Dietrichson <dietrichson@gmail.com>
 Description: A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 
     'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
@@ -43,11 +47,11 @@ Imports:
     glue,
     config,
     anytime,
-    here,
     cli,
     lifecycle,
     RSQLite,
-    usethis
+    usethis,
+    RPostgres
 RdMacros: lifecycle
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
