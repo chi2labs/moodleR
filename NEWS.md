@@ -1,5 +1,10 @@
 # moodleR 1.0.0
 
+* Added support for Postgres
+* Improved support for working directly with moodle DB (as opposed to cache)
+* Minor bug-fixes
+* Added support for non-standard table prefix
+
 # moodleR 0.3.2
 
 * Added more unit tests.
