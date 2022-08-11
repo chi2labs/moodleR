@@ -6,13 +6,13 @@
 \alias{moodleR-package}
 \title{moodleR: Helper Functions to Work with 'Moodle' Data}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
+A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit \url{https://moodle.org}.
 
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
+A collection of functions to connect to a 'Moodle' database, cache relevant tables locally and generate learning analytics. 'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit \url{https://moodle.org}.
 }
 \seealso{
 Useful links:
@@ -30,17 +30,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Aleksander Dietrichson \email{dietrichson@gmail.com}
-
-Other contributors:
-\itemize{
-  \item Chi Square Laboratories [copyright holder]
-  \item Darko Miletic [contributor]
-  \item Pablo Pagnone [contributor]
-  \item Alex Ondrus [contributor]
-}
-
-
 \strong{Maintainer}: Aleksander Dietrichson \email{dietrichson@gmail.com}
 
 Other contributors:
