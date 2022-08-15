@@ -1,5 +1,7 @@
 # moodleR 1.0.1
 
+* Updated documentation to comply with HTML 5.0
+
 # moodleR 1.0.0
 
 * Added support for Postgres

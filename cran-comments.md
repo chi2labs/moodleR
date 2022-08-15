@@ -1,14 +1,10 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Added support for Postgres
-* Added support for table-prefix
-* Switched to returning dbplyr table references for all large tables.
-* Fixed some bugs related to querying a moodle database directly without using the cache functions.
-* Added a contributor to the DESCRIPTION
+* Rebuilt documentation to comply with HTML 5
 
 ## Test environments
-* local R installation, R 4.1.2
+* local R installation, R 4.2.1
 * win-builder (devel)
 * win-builder (release)
 * r-hub
