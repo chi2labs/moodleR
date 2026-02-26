@@ -1,3 +1,5 @@
+# moodleR 1.0.2
+
 # moodleR 1.0.1
 
 * Updated documentation to comply with HTML 5.0
