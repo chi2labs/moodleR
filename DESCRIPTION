@@ -1,7 +1,7 @@
 Package: moodleR
 Type: Package
 Title: Helper Functions to Work with 'Moodle' Data
-Version: 1.0.2
+Version: 1.0.4
 Date: 2022-10-01
 Authors@R: 
     c(person(given = "Aleksander",

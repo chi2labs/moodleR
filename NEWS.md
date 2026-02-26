@@ -1,3 +1,7 @@
+# moodleR 1.0.4
+
+# moodleR 1.0.3
+
 # moodleR 1.0.2
 
 * Fixed undeclared variables for CRAN compliance
