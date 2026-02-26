@@ -1,5 +1,7 @@
 # moodleR 1.0.2
 
+* Fixed undeclared variables for CRAN compliance
+
 # moodleR 1.0.1
 
 * Updated documentation to comply with HTML 5.0
