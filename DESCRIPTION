@@ -25,7 +25,6 @@ Description: A collection of functions to connect to a 'Moodle' database, cache 
     'Moodle' is an open source Learning Management System (LMS) developed by MoodleHQ. For more information about Moodle, visit <https://moodle.org>.
 License: MIT + file LICENSE
 URL: https://github.com/chi2labs/moodleR
-url: https://github.com/chi2labs/moodleR
 Encoding: UTF-8
 VignetteBuilder: knitr
 Suggests: 
