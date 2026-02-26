@@ -18,14 +18,12 @@ A collection of functions to connect to a 'Moodle' database, cache relevant tabl
 Useful links:
 \itemize{
   \item \url{https://github.com/chi2labs/moodleR}
-  \item \url{https://chi2labs.github.io/moodleR/}
 }
 
 
 Useful links:
 \itemize{
   \item \url{https://github.com/chi2labs/moodleR}
-  \item \url{https://chi2labs.github.io/moodleR/}
 }
 
 }
