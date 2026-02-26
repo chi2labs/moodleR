@@ -15,17 +15,14 @@ status](https://www.r-pkg.org/badges/version/moodleR)](https://CRAN.R-project.or
 The goal of moodleR is to facilitate access to and manipulating of
 Moodle™ data for learning analytics practitioners. Moodle is a widely
 used open source learning management system (LMS). For more information
-about Moodle go to [www.moodle.org](https://moodle.org/).
+about Moodle go to <https://moodle.org>.
 
 ## Credits
 
 <img src="man/figures/chi2labs.png" width=100 /><br>
 
-This package is developed and maintained by the [chi square labs
-team](https://www.chi2labs.com/about) team. For more information about
-the work we do and the products and services we offer in learning
-analytics please visit our product page:
-[www.chi2labs.com/product](http://www.chi2labs.com/product).
+This package is developed and maintained by [chi square
+labs](https://www.chi2labs.com/).
 
 ## Installation
 
