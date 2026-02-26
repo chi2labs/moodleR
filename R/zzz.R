@@ -7,6 +7,6 @@
 
 ## Declaring globals
 
-utils::globalVariables(c("ïd", "category", "category_name", "courseid", "created", "gender", "hist", "maxtime",
+utils::globalVariables(c("id", "category", "category_name", "courseid", "created", "gender", "hist", "maxtime",
                          "mintime",
                          "name", "normalized_grade", "rawgrade", "rawgrademax", "thread_name", "userid", "word"))
